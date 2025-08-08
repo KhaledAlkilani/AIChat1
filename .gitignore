@@ -1,0 +1,35 @@
+﻿# Node / Front-end 
+node_modules/
+dist/
+.vite/
+out/
+.eslintcache
+*.log
+
+# .NET / Visual Studio
+**/bin/
+**/obj/
+*.db
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.vs/
+*.vscode/
+
+# Entity Framework
+Migrations/
+
+# OS artifacts
+Thumbs.db
+.DS_Store
+
+# Environment
+.env
+.env.*
+
+# Copilot indexes
+**/.vs/**/CopilotIndices/
+
+# dotenv secret file
+.env
