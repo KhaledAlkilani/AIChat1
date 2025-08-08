@@ -30,3 +30,6 @@ Thumbs.db
 
 # Copilot indexes
 **/.vs/**/CopilotIndices/
+
+# dotenv secret file
+.env

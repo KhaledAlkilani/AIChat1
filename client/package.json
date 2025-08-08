@@ -13,7 +13,8 @@
     "typecheck": "npm run typecheck:node && npm run typecheck:web",
     "start": "electron-vite preview",
     "dev": "electron-vite dev",
-    "build": "npm run typecheck && electron-vite build",
+    "build": "npm run typecheck && electron-vite build && npm run generate-api",
+    "generate-api": "npx openapi-typescript-codegen --input http://localhost:5164/swagger/v1/swagger.json --output src/api --client fetch && node generateApiWrapper.cjs",
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "npm run build && electron-builder --dir",
     "build:win": "npm run build && electron-builder --win",
@@ -26,6 +27,7 @@
     "@microsoft/signalr": "^9.0.6",
     "@mui/material": "^7.2.0",
     "@mui/styled-engine-sc": "^7.2.0",
+    "dotenv": "^17.2.1",
     "electron-updater": "^6.3.9",
     "styled-components": "^6.1.19"
   },
