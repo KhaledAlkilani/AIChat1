@@ -33,7 +33,13 @@ builder.Services.AddHttpClient<IChatService, ChatService>();
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 // Enable Controllers & Endpoints
-builder.Services.AddControllers();
+// Add JSON options for enum serialization
+// This allows enums to be serialized as strings in JSON responses
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+    });
 builder.Services.AddEndpointsApiExplorer();
 
 // OpenAPI Configuration
@@ -62,18 +68,11 @@ builder.Services.AddCors(options =>
     options.AddPolicy(allowFrontEndCors, policy =>
     {
         policy.WithOrigins(frontEndUrl)
-        .AllowAnyMethod()
-        .AllowAnyHeader();
+          .AllowAnyHeader()
+          .AllowAnyMethod()
+          .AllowCredentials();
     });
 });
-
-// Add JSON options for enum serialization
-// This allows enums to be serialized as strings in JSON responses
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
-    });
 
 if (string.IsNullOrEmpty(jwtSecretKey))
 {
@@ -112,10 +111,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 // Add authentication and authorization services
 //builder.Services.AddAuthorization();
 
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-app.UseCors(allowFrontEndCors);
+var app = builder.Build();  
 
 // Enable OpenAPI UI. Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -134,7 +130,7 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 // Enable CORS for the specified policy
-app.UseCors("AllowAll");
+app.UseCors(allowFrontEndCors);
 
 // Enable authentication and authorization middleware
 app.UseAuthentication();
