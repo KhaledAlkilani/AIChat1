@@ -60,11 +60,11 @@ namespace AIChat1.Controller
         public async Task<ActionResult<MessageDto>> GetById(int id)
         {
             var m = await _db.Messages
-                             .Include(x => x.Username)
+                             .Include(x => x.User)
                              .FirstOrDefaultAsync(x => x.Id == id);
             if (m is null) return NotFound();
 
-            var dto = new MessageDto(m.Id, m.UserId, m.Content, m.SentAt, m.Username.Username);
+            var dto = new MessageDto(m.Id, m.UserId, m.Content, m.SentAt, m.User.Username);
             return Ok(dto);
         }
     }

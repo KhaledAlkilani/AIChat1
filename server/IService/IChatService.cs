@@ -8,6 +8,6 @@
         /// <param name="userName">The authenticated user's name or ID.</param>
         /// <param name="message">The user's input text.</param>
         /// <returns>The AI-generated response.</returns>
-        Task<string> GetAiResponseAsync(string userName, string message);
+        Task<string> GetAiResponseAsync(string userName, string message, CancellationToken ct = default);
     }
 }

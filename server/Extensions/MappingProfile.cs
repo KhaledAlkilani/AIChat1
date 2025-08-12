@@ -16,7 +16,7 @@ namespace AIChat1.Extensions
             // Message → MessageDto
             CreateMap<Message, MessageDto>()
                 .ForMember(d => d.UserId, opt => opt.MapFrom(src => src.UserId))
-                .ForMember(d => d.Username, opt => opt.MapFrom(src => src.Username));
+                .ForMember(d => d.Username, opt => opt.MapFrom(src => src.User));
 
             // UserDto → User
             CreateMap<RegisterRequest, User>()
