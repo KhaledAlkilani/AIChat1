@@ -1,47 +1,44 @@
-// generateApiWrapper.js (example)
+// generateApiWrapper.cjs
 const fs = require('fs')
 const path = require('path')
 
-const servicesDir = path.join(__dirname, 'src/api/services')
-const outputFile = path.join(__dirname, 'src/api/api.ts')
+const apiRoot = path.join(__dirname, 'src/renderer/src/api')
+const servicesDir = path.join(apiRoot, 'services')
+const modelsDir = path.join(apiRoot, 'models')
+const outputFile = path.join(apiRoot, 'api.ts')
 
-// Ensure services directory exists
 if (!fs.existsSync(servicesDir)) {
-  console.error("Services directory not found! Run 'npm run generate-api' first.")
+  console.error("Services directory not found. Did you run 'npm run generate-api'?")
   process.exit(1)
 }
 
-// Step 1: Get all service files
+// collect all service files
 const serviceFiles = fs
   .readdirSync(servicesDir)
-  .filter((file) => file.endsWith('.ts'))
-  .map((file) => file.replace('.ts', ''))
+  .filter((f) => f.endsWith('.ts'))
+  .map((f) => f.replace(/\.ts$/, ''))
 
-// Step 2: Import everything from each service
-// e.g., "import * as PlayerServiceExports from './services/PlayerService';"
+// import everything from each service
 const imports = serviceFiles
   .map((name) => `import * as ${name}Exports from "./services/${name}";`)
   .join('\n')
 
-// Step 3: Create an api object that merges all named exports from each file
-// so you can do: api.PlayerServiceExports.getPlayerInfo()
+// merge into one api object
 const apiObject = `
 export const api = {
   ${serviceFiles.map((name) => `...${name}Exports`).join(',\n  ')}
 };
 `
 
-// Step 4: Export all models
-const modelsDir = path.join(__dirname, 'src/api/models')
-const modelFiles = fs.existsSync(modelsDir)
+// re-export all models
+const modelExports = fs.existsSync(modelsDir)
   ? fs
       .readdirSync(modelsDir)
-      .filter((file) => file.endsWith('.ts'))
-      .map((file) => `export * from "./models/${file.replace('.ts', '')}";`)
+      .filter((f) => f.endsWith('.ts'))
+      .map((f) => `export * from "./models/${f.replace(/\.ts$/, '')}";`)
       .join('\n')
   : ''
 
-const fileContent = `${imports}\n\n${apiObject}\n\n${modelFiles}\n`
-
+const fileContent = `${imports}\n\n${apiObject}\n\n${modelExports}\n`
 fs.writeFileSync(outputFile, fileContent)
 console.log('API wrapper generated successfully!')
