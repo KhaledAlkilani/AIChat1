@@ -6,7 +6,6 @@ namespace AIChat1.Entity
     {
         public int ConversationId { get; set; }
         public Conversation Conversation { get; set; } = null!;
-
         [Required] public string Filename { get; set; } = "";
         [Required] public string FileType { get; set; } = "";
         [Required] public string Url { get; set; } = "";

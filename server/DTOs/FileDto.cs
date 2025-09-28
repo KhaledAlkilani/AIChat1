@@ -2,6 +2,8 @@
 {
     public class FileDto
     {
-        public record FileUploadResult(int Id, string Filename, string Url, DateTime UploadedAt);
+        public int Id { get; set; }
+        public string Filename { get; set; } = default!;
+        public string Url { get; set; } = default!; 
     }
 }

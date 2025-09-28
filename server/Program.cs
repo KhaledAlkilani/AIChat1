@@ -4,7 +4,9 @@ using AIChat1.IService;
 using AIChat1.Options;
 using AIChat1.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -26,7 +28,7 @@ var openAiModel = builder.Configuration["OpenAI:Model"] ?? "gpt-4o-mini";
 // Repository & service registration
 // Bind OpenAI options from configuration (.env -> configuration)
 builder.Services.Configure<OpenAIOptions>(builder.Configuration.GetSection("OpenAI"));
-builder.Services.AddHttpClient<IChatService, ChatService>();
+builder.Services.AddScoped<IChatService, ChatService>();
 // LLM client: typed HttpClient + your implementation
 builder.Services.AddHttpClient<ILLMClient, OpenAiClient>(client =>
 {
@@ -118,10 +120,27 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateLifetime = true,
             ClockSkew = TimeSpan.Zero
         };
+        opts.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+                var path = context.HttpContext.Request.Path;
+
+                // If the request is for our SignalR hub
+                if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/chat"))
+                {
+                    context.Token = accessToken;
+                }
+                return Task.CompletedTask;
+            }
+        };
     });
 
 // Add SignalR and other necessary services
 builder.Services.AddSignalR();
+// Add custom user ID provider for SignalR
+builder.Services.AddSingleton<IUserIdProvider, SubClaimUserIdProvider>();
 builder.Services.AddRazorPages();
 
 // Add AutoMapper for object mapping

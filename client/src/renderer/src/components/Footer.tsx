@@ -1,24 +1,27 @@
-import { Box, FormControl, IconButton, InputBase } from '@mui/material'
-import { useTheme, Theme } from '@mui/material/styles'
-import { useState } from 'react'
-import { api } from '@renderer/api/api'
+import { getTokenString, getUserFromToken, Me } from '@renderer/auth/jwt'
+import { Box, FormControl, IconButton, InputBase, Theme, useTheme } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send'
-import { OpenAPI } from '@renderer/api'
+import { useEffect, useState } from 'react'
+import { api } from '@renderer/api/api'
 
-const Footer = () => {
+type FooterProps = { sessionId: string | null }
+
+const Footer = ({ sessionId }: FooterProps) => {
   const theme = useTheme()
   const [text, setText] = useState('')
-  const currentUserId = 1 // TODO: get this from your auth/user store
+  const [me, setMe] = useState<Me | null>(null)
+
+  // read token once when the footer mounts
+  useEffect(() => {
+    const t = getTokenString()
+    setMe(t ? getUserFromToken(t) : null)
+  }, [])
 
   const send = async () => {
     const content = text.trim()
-    if (!content) return
+    if (!content || !me || !sessionId) return
     try {
-      console.log('[send] POST', `${OpenAPI.BASE}/api/chat/send`, {
-        userId: currentUserId,
-        content
-      })
-      await api.ChatService.sendMessage({ userId: currentUserId, content })
+      await api.ChatService.sendMessage({ userId: me.id, content })
       setText('')
     } catch (err) {
       console.error('Failed to send:', err)
@@ -32,6 +35,8 @@ const Footer = () => {
     }
   }
 
+  const disabled = !text.trim() || !me || !sessionId
+
   return (
     <Box sx={styles.footer(theme)}>
       <FormControl sx={{ width: '100%' }}>
@@ -40,10 +45,9 @@ const Footer = () => {
           onChange={(e) => setText(e.target.value)}
           onKeyDown={onKeyDown}
           sx={{ flex: 1, padding: theme.spacing(0.5) }}
-          fullWidth
           placeholder="Ask what’s on your mind"
           endAdornment={
-            <IconButton onClick={send} aria-label="send" disabled={!text.trim()}>
+            <IconButton onClick={send} aria-label="send" disabled={disabled}>
               <SendIcon />
             </IconButton>
           }
@@ -59,10 +63,8 @@ const styles = {
   footer: (theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
-    gap: 1,
-    padding: `${theme.spacing(2)} ${theme.spacing(1)}`,
-    backgroundColor: theme.palette.grey[100],
-    borderTop: `1px solid ${theme.palette.divider}`,
-    color: theme.palette.text.secondary
+    padding: theme.spacing(1),
+    backgroundColor: theme.palette.background.paper,
+    borderTop: `1px solid ${theme.palette.divider}`
   })
 }

@@ -8,7 +8,10 @@ namespace AIChat1.Services
 
         public ChatService(ILLMClient llm) => _llm = llm;
 
-        public Task<string> GetAiResponseAsync(string userName, string message, CancellationToken ct = default)
-            => _llm.GetChatCompletionAsync(userName, message, ct);
+        public Task<string?> GetAiResponseAsync(string userName, string message, CancellationToken ct = default)
+            => _llm.GetReplyAsync(userName, message, ct);
+
+        public Task<string?> GetAiResponseWithHistoryAsync(IEnumerable<LlmMsg> messages, CancellationToken ct = default)
+            => _llm.GetReplyWithHistoryAsync(messages, ct);
     }
 }

@@ -11,6 +11,7 @@ export type { LoginRequest } from './models/LoginRequest';
 export type { MessageDto } from './models/MessageDto';
 export type { RegisterRequest } from './models/RegisterRequest';
 export type { SendMessageRequest } from './models/SendMessageRequest';
+export type { StartConversationRequest } from './models/StartConversationRequest';
 
 export { AuthService } from './services/AuthService';
 export { ChatService } from './services/ChatService';
