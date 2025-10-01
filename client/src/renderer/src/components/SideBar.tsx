@@ -56,10 +56,7 @@ const SideBar = ({ active, onSelect, onCreate }: Props) => {
       <Typography color="black" variant="subtitle1" sx={{ mb: 1 }}>
         Conversations
       </Typography>
-      <Button variant="outlined" size="small" onClick={onCreate} sx={{ mb: 1 }}>
-        New chat
-      </Button>
-      <List dense sx={{ bgcolor: 'transparent' }}>
+      <List dense sx={{ bgcolor: 'transparent', flex: 1 }}>
         {sessions.map((s) => (
           <ListItemButton key={s.id} selected={s.id === active} onClick={() => onSelect(s.id)}>
             <ListItemText
@@ -81,6 +78,9 @@ const SideBar = ({ active, onSelect, onCreate }: Props) => {
           </ListItemButton>
         ))}
       </List>
+      <Button variant="outlined" size="small" onClick={onCreate} sx={{ mb: 1 }}>
+        New chat
+      </Button>
     </Box>
   )
 }
@@ -103,6 +103,6 @@ const styles = {
     p: 2,
     display: 'flex',
     flexDirection: 'column',
-    overflow: 'hidden', // keep internals from expanding the box
-  }),
+    overflow: 'hidden' // keep internals from expanding the box
+  })
 }
