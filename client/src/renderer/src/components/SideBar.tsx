@@ -1,86 +1,112 @@
-import { Box, Button, List, ListItemButton, ListItemText, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  List,
+  ListItemButton,
+  ListItemText,
+  Typography,
+  IconButton
+} from '@mui/material'
 import { useTheme, Theme } from '@mui/material/styles'
-import { useEffect, useState } from 'react'
-import { IconButton } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
+import { useNavigate } from 'react-router-dom'
+import { logout } from '@renderer/auth/jwt'
+import { api, ConversationDto } from '@renderer/api/api'
 
-type Session = { id: string; title: string; createdAt: number; updatedAt: number }
-type Props = { active: string | null; onSelect: (id: string | null) => void; onCreate: () => void }
+interface SideBarProps {
+  active: number | null
+  sessions: ConversationDto[]
+  userId: number | null
+  onSelect: (id: number | null) => void
+  onCreate: () => void
+  setSessions: React.Dispatch<React.SetStateAction<ConversationDto[]>>
+}
 
-const SideBar = ({ active, onSelect, onCreate }: Props) => {
+const SideBar = ({ active, onSelect, onCreate, sessions, userId, setSessions }: SideBarProps) => {
   const theme = useTheme()
-  const [sessions, setSessions] = useState<Session[]>(() => {
-    try {
-      return JSON.parse(localStorage.getItem('chat.sessions') || '[]')
-    } catch {
-      return []
-    }
-  })
+  const navigate = useNavigate()
+  // const { sessions, userId, setSessions } = useChatSessions(true)
 
-  // poll for changes written by ChatMessages
-  useEffect(() => {
-    const i = setInterval(() => {
-      try {
-        setSessions(JSON.parse(localStorage.getItem('chat.sessions') || '[]'))
-      } catch {
-        setSessions([])
-      }
-    }, 800)
-    return () => clearInterval(i)
-  }, [])
-
-  const handleDelete = (id: string) => {
-    // optional confirm
+  const handleDelete = async (id: number) => {
     if (!confirm('Delete this conversation?')) return
+    if (userId == null) return
 
-    // 1) remove messages for this session
-    localStorage.removeItem(`chat.messages:${id}`)
+    try {
+      await api.ChatService.deleteConversation(id)
 
-    // 2) remove from sessions list
-    const sessionsRaw = localStorage.getItem('chat.sessions') || '[]'
-    const sessionsArr = JSON.parse(sessionsRaw) as Session[]
-    const updated = sessionsArr.filter((s) => s.id !== id)
-    localStorage.setItem('chat.sessions', JSON.stringify(updated))
+      setSessions((prevSessions) => prevSessions.filter((s) => s.id !== id)) // 3. If active session was deleted, clear it
 
-    // 3) clear "last active" if it was this one
-    const last = localStorage.getItem('chat.active')
-    if (last === id) localStorage.removeItem('chat.active')
+      if (active === id) {
+        onSelect(null)
+      }
+    } catch (err) {
+      console.error('Failed to delete conversation:', err)
+    }
+  }
 
-    // 4) reflect in UI
-    setSessions(updated)
-    if (active === id) onSelect(null)
+  const handleLogout = () => {
+    logout()
+    navigate('/login')
   }
 
   return (
     <Box sx={styles.sidebar(theme)}>
-      <Typography color="black" variant="subtitle1" sx={{ mb: 1 }}>
-        Conversations
-      </Typography>
-      <List dense sx={{ bgcolor: 'transparent', flex: 1 }}>
-        {sessions.map((s) => (
-          <ListItemButton key={s.id} selected={s.id === active} onClick={() => onSelect(s.id)}>
-            <ListItemText
-              primary={s.title || 'New chat'}
-              // IMPORTANT: show createdAt (fixed), not updatedAt
-              secondary={new Date(s.createdAt).toLocaleString()}
-            />
-            <IconButton
-              size="small"
-              edge="end"
-              aria-label="delete"
-              onClick={(e) => {
-                e.stopPropagation() // don’t select the row
-                handleDelete(s.id)
-              }}
-            >
-              <DeleteIcon fontSize="small" />
-            </IconButton>
-          </ListItemButton>
-        ))}
-      </List>
-      <Button variant="outlined" size="small" onClick={onCreate} sx={{ mb: 1 }}>
-        New chat
-      </Button>
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Typography variant="subtitle1" sx={styles.title}>
+          Conversations
+        </Typography>
+      </Box>
+
+      <Box sx={styles.scrollArea}>
+        <List dense sx={styles.list}>
+          {sessions.map((s) => {
+            if (s.id == null) {
+              return null
+            }
+            return (
+              <ListItemButton key={s.id} selected={s.id === active} onClick={() => onSelect(s.id!)}>
+                <ListItemText
+                  primary={s.title ?? 'New chat'}
+                  secondary={s.createdAt ? new Date(s.createdAt).toLocaleString() : ''}
+                />
+                <IconButton
+                  size="small"
+                  edge="end"
+                  aria-label="delete"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleDelete(s.id!)
+                  }}
+                >
+                  <DeleteIcon fontSize="small" />
+                </IconButton>
+              </ListItemButton>
+            )
+          })}
+        </List>
+      </Box>
+
+      <Box sx={styles.stickyButtons}>
+        <Button
+          variant="contained"
+          size="small"
+          fullWidth
+          onClick={onCreate}
+          sx={styles.newChatButton}
+        >
+          New Chat
+        </Button>
+        <Button
+          variant="text"
+          size="small"
+          fullWidth
+          color="error"
+          onClick={handleLogout}
+          sx={styles.logoutButton}
+        >
+          Logout
+        </Button>
+      </Box>
     </Box>
   )
 }
@@ -89,20 +115,37 @@ export default SideBar
 
 const styles = {
   sidebar: (theme: Theme) => ({
-    // FIXED WIDTH — no more resize
-    width: 280,
     minWidth: 280,
-    maxWidth: 280,
-    flex: '0 0 280px',
-    flexShrink: 0,
-
-    height: '100%',
-    boxSizing: 'border-box',
+    width: '20%',
     borderRight: `1px solid ${theme.palette.divider}`,
-    bgcolor: theme.palette.grey[200],
-    p: 2,
+    backgroundColor: theme.palette.grey[200],
     display: 'flex',
     flexDirection: 'column',
-    overflow: 'hidden' // keep internals from expanding the box
-  })
+    pt: theme.spacing(2)
+  }),
+  title: {
+    marginBottom: (theme) => theme.spacing(1)
+  },
+  scrollArea: {
+    flexGrow: 1,
+    overflowY: 'auto',
+    marginBottom: 0,
+    height: '100%'
+  },
+  stickyButtons: {
+    display: 'flex',
+    flexDirection: 'column',
+    p: 2
+  },
+  list: {
+    bgcolor: 'transparent'
+  },
+  newChatButton: {
+    marginBottom: 1,
+    textTransform: 'none'
+  },
+  logoutButton: {
+    textTransform: 'none',
+    alignSelf: 'flex-start'
+  }
 }

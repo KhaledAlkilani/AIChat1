@@ -2,9 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type SendMessageRequest = {
-    userId?: number;
-    content?: string | null;
-    conversationId?: number | null;
-};
-
+export enum MessageSender {
+    USER = 'User',
+    ASSISTANT = 'Assistant',
+}

@@ -1,101 +1,35 @@
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useTheme, Theme } from '@mui/material/styles'
-import { HubConnectionBuilder, LogLevel, HttpTransportType } from '@microsoft/signalr'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
+import { useEffect, useRef, useState } from 'react'
 import { MessageDto } from '@renderer/api/api'
 import { OpenAPI } from '@renderer/api'
+import { useChatMessages } from '../hooks/useChatMessages'
 
-type Props = { sessionId: string | null }
-
-type Session = { id: string; title: string; createdAt: number; updatedAt: number }
+type Props = { sessionId: number | null }
 
 const ChatMessages = ({ sessionId }: Props) => {
   const theme = useTheme()
-  const [msgs, setMsgs] = useState<MessageDto[]>([])
+  const {
+    messages: msgs,
+    setMessages: setMsgs,
+    loading,
+    error,
+    refetchMessages
+  } = useChatMessages(sessionId)
+  // const [msgs, setMsgs] = useState<MessageDto[]>([])
 
   // const token = useMemo(() => localStorage.getItem('token') ?? '', [])
   const base =
     OpenAPI.BASE || (import.meta.env.VITE_API_BASE_URL as string) || 'http://localhost:5164'
 
-  const getToken = () => localStorage.getItem('token') ?? ''
-
-  // Load existing messages whenever the selected session changes
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(`chat.messages:${sessionId}`) || '[]'
-      setMsgs(JSON.parse(raw))
-    } catch {
-      setMsgs([])
-    }
-  }, [sessionId])
+  // const getToken = () => localStorage.getItem('token') ?? ''
 
   // autoscroll
   const endRef = useRef<HTMLDivElement | null>(null)
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [msgs])
-
-  // useEffect(() => {
-  //   if (!getToken()) return
-
-  //   const conn = new HubConnectionBuilder()
-  //     .withUrl(`${base}/chat`, { accessTokenFactory: getToken })
-  //     .configureLogging(LogLevel.Information)
-  //     .withAutomaticReconnect()
-  //     .build()
-
-  //   const handler = (sender: string, text: string) => {
-  //     const dto: MessageDto = {
-  //       id: Date.now(),
-  //       userId: 0,
-  //       content: text,
-  //       sentAt: new Date().toISOString(),
-  //       username: sender as any
-  //     } as any
-
-  //     setMsgs((prev) => {
-  //       const next = [...prev, dto]
-  //       // persist messages for this session
-  //       localStorage.setItem(`chat.messages:${sessionId}`, JSON.stringify(next))
-
-  //       // update sessions list:
-  //       try {
-  //         const sessions: Session[] = JSON.parse(localStorage.getItem('chat.sessions') || '[]')
-  //         const idx = sessions.findIndex((s) => s.id === sessionId)
-  //         if (idx >= 0) {
-  //           const s = { ...sessions[idx] }
-
-  //           // Title from FIRST **user** message only
-  //           const isUser = sender.toLowerCase() !== 'ai'
-  //           if ((s.title === 'New chat' || !s.title) && isUser) {
-  //             s.title = text.slice(0, 40)
-  //           }
-
-  //           // Keep createdAt fixed; only bump updatedAt for sorting
-  //           s.updatedAt = Date.now()
-
-  //           const updated = [...sessions]
-  //           updated[idx] = s
-  //           // (optional) sort by recent activity
-  //           updated.sort((a, b) => b.updatedAt - a.updatedAt)
-
-  //           localStorage.setItem('chat.sessions', JSON.stringify(updated))
-  //         }
-  //       } catch {
-  //         /* ignore */
-  //       }
-
-  //       return next
-  //     })
-  //   }
-
-  //   conn.on('ReceiveMessage', handler)
-  //   conn.start().catch((err) => console.error('[SignalR] start error', err))
-  //   return () => {
-  //     conn.off('ReceiveMessage', handler)
-  //     void conn.stop()
-  //   }
-  // }, [base, sessionId])
 
   useEffect(() => {
     // no connection if nothing to show yet
@@ -120,11 +54,7 @@ const ChatMessages = ({ sessionId }: Props) => {
         username: sender as any
       } as any
 
-      setMsgs((prev) => {
-        const next = [...prev, dto]
-        localStorage.setItem(`chat.messages:${sessionId}`, JSON.stringify(next))
-        return next
-      })
+      setMsgs((prev) => [...prev, dto])
     }
 
     conn.on('ReceiveMessage', handler)
@@ -140,14 +70,10 @@ const ChatMessages = ({ sessionId }: Props) => {
     }
     start()
 
-    // when SignalR reconnected, reload the persisted messages for this session
+    // when SignalR reconnected, refetch messages from backend
     conn.onreconnected(() => {
-      try {
-        const raw = localStorage.getItem(`chat.messages:${sessionId}`) || '[]'
-        setMsgs(JSON.parse(raw))
-      } catch {
-        setMsgs([])
-      }
+      console.log('SignalR reconnected, refetching messages...')
+      refetchMessages()
     })
 
     return () => {
@@ -155,10 +81,14 @@ const ChatMessages = ({ sessionId }: Props) => {
       conn.off('ReceiveMessage', handler)
       void conn.stop()
     }
-  }, [base, sessionId]) // <-- note: no captured `token` here
+  }, [base, sessionId, refetchMessages])
+
+  console.log(msgs.map((m) => m.content))
 
   return (
     <Box sx={styles.ChatMessages(theme)}>
+      {loading && <Typography color="text.secondary">Loading messages...</Typography>}
+      {error && <Typography color="error">Failed to load messages: {error.message}</Typography>}
       {msgs.map((m, i) => (
         <Box key={i} gap={1} sx={{ mb: 2, display: 'flex' }}>
           <strong>{(m as any).username ?? m.userId}:</strong> {m.content}

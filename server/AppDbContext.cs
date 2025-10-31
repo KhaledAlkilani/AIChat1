@@ -1,6 +1,7 @@
 ﻿using AIChat1.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
+using System.Reflection.Emit;
 
 namespace AIChat1
 {
@@ -30,6 +31,14 @@ namespace AIChat1
                 .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            b.Entity<Conversation>(b =>
+            {
+                b.Property(x => x.Title)
+                 .IsRequired()
+                 .HasMaxLength(200)
+                 .HasDefaultValue(string.Empty);
+            });
+
             // Message ↔ User (a message is authored by one user)
             b.Entity<Message>()
                 .HasOne(m => m.User)
@@ -53,6 +62,8 @@ namespace AIChat1
                 .WithMany()
                 .HasForeignKey(f => f.ConversationId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            
         }
     }
 };

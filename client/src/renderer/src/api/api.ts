@@ -8,8 +8,11 @@ export const api = {
 };
 
 
+export * from "./models/ConversationDto";
 export * from "./models/LoginRequest";
 export * from "./models/MessageDto";
+export * from "./models/MessageSender";
+export * from "./models/ProblemDetails";
 export * from "./models/RegisterRequest";
 export * from "./models/SendMessageRequest";
 export * from "./models/StartConversationRequest";

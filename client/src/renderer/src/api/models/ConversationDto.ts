@@ -2,9 +2,11 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type SendMessageRequest = {
+export type ConversationDto = {
+    id?: number;
     userId?: number;
-    content?: string | null;
-    conversationId?: number | null;
+    title?: string | null;
+    createdAt?: string;
+    expiresAt?: string | null;
 };
 

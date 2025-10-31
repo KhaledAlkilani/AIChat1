@@ -1,8 +1,12 @@
-export type Me = { id: number; username: string; roles: string[] }
+export interface AuthUser {
+  id: number
+  username: string
+  roles: string[]
+}
 
 export const getTokenString = (): string | null => localStorage.getItem('token')
 
-export function getUserFromToken(token: string): Me | null {
+export function getUserFromToken(token: string): AuthUser | null {
   try {
     const payloadBase64 = token.split('.')[1]
     const json = atob(payloadBase64.replace(/-/g, '+').replace(/_/g, '/'))
@@ -23,4 +27,16 @@ export function getUserFromToken(token: string): Me | null {
   } catch {
     return null
   }
+}
+
+export function logout() {
+  localStorage.removeItem('token')
+  localStorage.removeItem('chat.active')
+
+  // Optionally clear all cached chat data
+  Object.keys(localStorage).forEach((key) => {
+    if (key.startsWith('chat.messages:')) {
+      localStorage.removeItem(key)
+    }
+  })
 }

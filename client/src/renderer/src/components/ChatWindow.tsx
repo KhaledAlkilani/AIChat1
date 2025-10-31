@@ -1,117 +1,91 @@
-// import Header from './Header'
-// import ChatMessages from './ChatMessages'
-// import Footer from './Footer'
-// import { Box } from '@mui/material'
-
-// const ChatWindow = () => {
-//   return (
-//     <Box sx={styles.chatWindow}>
-//       <Header />
-//       <ChatMessages />
-//       <Footer />
-//     </Box>
-//   )
-// }
-
-// export default ChatWindow
-
-// const styles = {
-//   chatWindow: {
-//     display: 'flex',
-//     flexDirection: 'column',
-//     flexGrow: 1,
-//     height: '100%'
-//   }
-// }
-
-import Header from './Header'
-import ChatMessages from './ChatMessages'
-import Footer from './Footer'
-import SideBar from './SideBar'
-import { Box, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useChatSessions } from '../hooks/useChatSessions'
 import { getTokenString, getUserFromToken } from '@renderer/auth/jwt'
-import { OpenAPI } from '@renderer/api'
 import { api } from '@renderer/api/api'
+import { Box, Typography } from '@mui/material'
+import ChatMessages from './ChatMessages'
+import SideBar from './SideBar'
+import Header from './Header'
+import { useEffect, useState } from 'react'
+import Footer from './Footer'
 
-type Session = { id: string; title: string; createdAt: number; updatedAt: number }
-
-function createSession(): Session {
-  return {
-    id: crypto.randomUUID(),
-    title: 'New chat',
-    createdAt: Date.now(),
-    updatedAt: Date.now()
-  }
-}
 const ChatWindow = () => {
-  const [activeSessionId, setActiveSessionId] = useState<string | null>(null)
+  const { sessions, userId, setSessions, refetchSessions } = useChatSessions(true)
+  const [activeSessionId, setActiveSessionId] = useState<number | null>(null)
+  const [isCreatingNew, setIsCreatingNew] = useState(false)
 
   useEffect(() => {
-    const last = localStorage.getItem('chat.active')
-    console.log('[last active chat id]', last)
-  }, [])
-
-  const ensureSessions = () => {
-    const raw = localStorage.getItem('chat.sessions')
-    if (!raw) localStorage.setItem('chat.sessions', '[]')
-  }
-  ensureSessions()
+    if (!sessions.length || activeSessionId !== null) return
+    const sorted = [...sessions].sort(
+      (a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()
+    )
+    if (sorted[0]?.id) setActiveSessionId(sorted[0].id)
+  }, [sessions, activeSessionId])
 
   const handleCreateNewConversation = async () => {
-    // 0) ensure we have the current user id
-    const t = getTokenString()
-    const me = t ? getUserFromToken(t) : null
-    if (!me) {
-      console.warn('No user — cannot start server conversation')
-    } else {
-      try {
-        await api.ChatService.startNewConversation({
-          userId: me.id
-        })
-        // we don't need the returned id here; Send() will pick the new active conv
-      } catch (e) {
-        console.error('Failed to start server conversation', e)
-      }
+    if (!userId) {
+      return
     }
 
-    // 1) keep your local session for the UI
-    const s = createSession()
-    const sessions: Session[] = JSON.parse(localStorage.getItem('chat.sessions') || '[]')
-    localStorage.setItem('chat.sessions', JSON.stringify([s, ...sessions]))
-    localStorage.setItem(`chat.messages:${s.id}`, '[]')
+    const me = getUserFromToken(getTokenString()!)
+    if (!me) {
+      console.warn('Invalid token / user')
+      return
+    }
 
-    // 2) select & remember it (UI only)
-    setActiveSessionId(s.id)
-    localStorage.setItem('chat.active', s.id)
+    try {
+      // Backend call to start a new conversation
+      const created = await api.ChatService.startNewConversation({ userId: me.id }) // now returns ConversationDto
+      if (!created || typeof created.id !== 'number') return
+      setSessions((prev) => [created, ...prev])
+      setActiveSessionId(created.id)
+      void refetchSessions()
+    } catch (e) {
+      console.error('Backend startNewConversation failed', e)
+    }
   }
 
-  // when selecting from sidebar
-  const handleSelectExistingConversation = (id: string | null) => {
+  const handleSelectExisting = (id: number | null) => {
     setActiveSessionId(id)
-    if (id) localStorage.setItem('chat.active', id)
-    else localStorage.removeItem('chat.active') // cleared after delete
+    setIsCreatingNew(false) // We are now viewing an existing session
   }
 
   return (
     <Box sx={styles.appContainer()}>
-      {/* this row holds SideBar + chat column side-by-side */}
       <Box sx={styles.mainRow}>
         <SideBar
           active={activeSessionId}
-          onSelect={handleSelectExistingConversation}
+          onSelect={handleSelectExisting}
           onCreate={handleCreateNewConversation}
+          sessions={sessions}
+          userId={userId}
+          setSessions={setSessions}
         />
-        {/* chat column */}
         <Box sx={styles.chatColumn}>
           <Header />
-          {activeSessionId ? (
+          {activeSessionId || isCreatingNew ? (
+            // Show chat UI if we have an ID OR if we are creating a new one
             <>
               <ChatMessages sessionId={activeSessionId} />
-              <Footer sessionId={activeSessionId} />
+              <Footer
+                sessionId={activeSessionId!}
+                onMessageSent={async (firstUserText?: string, sessionIdArg?: number) => {
+                  // optimistic title from the first user message if missing
+                  const sid = sessionIdArg ?? activeSessionId
+                  if (firstUserText && activeSessionId) {
+                    setSessions((prev) =>
+                      prev.map((s) =>
+                        s.id === sid && (!s.title || s.title === 'New chat')
+                          ? { ...s, title: firstUserText.slice(0, 60) }
+                          : s
+                      )
+                    )
+                  }
+                  await refetchSessions()
+                  setIsCreatingNew(false)
+                }}
+              />
             </>
           ) : (
-            // Empty state when nothing selected
             <Box sx={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Typography color="text.secondary">
                 Pick a conversation or create a new one
@@ -128,23 +102,20 @@ export default ChatWindow
 
 const styles = {
   appContainer: () => ({
-    display: 'flex',
-    flexDirection: 'row',
     height: '100vh',
-    width: '100vw'
+    display: 'flex',
+    flexDirection: 'column',
+    overflow: 'hidden'
   }),
   mainRow: {
     display: 'flex',
-    flexDirection: 'row',
-    flexGrow: 1,
-    width: '100%',
-    minHeight: 0
+    flex: 1,
+    overflow: 'hidden'
   },
   chatColumn: {
+    flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    flexGrow: 1,
-    minWidth: 0,
-    height: '100%'
+    overflow: 'hidden'
   }
 }

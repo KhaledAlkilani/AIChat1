@@ -3,6 +3,7 @@ using AIChat1.Extensions;
 using AIChat1.IService;
 using AIChat1.Options;
 using AIChat1.Services;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -144,7 +145,7 @@ builder.Services.AddSingleton<IUserIdProvider, SubClaimUserIdProvider>();
 builder.Services.AddRazorPages();
 
 // Add AutoMapper for object mapping
-builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddAutoMapper(typeof(Mapper));
 
 // Add authentication and authorization services
 //builder.Services.AddAuthorization();
