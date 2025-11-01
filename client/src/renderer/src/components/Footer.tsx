@@ -25,6 +25,7 @@ const Footer = ({ sessionId, onMessageSent }: FooterProps) => {
     const content = text.trim()
     if (!content || !currentUser || !sessionId) {
     }
+    setText('')
 
     try {
       // bind the message to the active conversation
@@ -47,6 +48,7 @@ const Footer = ({ sessionId, onMessageSent }: FooterProps) => {
     }
 
     if (e.key === 'Enter' && !e.shiftKey) {
+      setText('')
       e.preventDefault()
       await handleSend()
     }
@@ -92,12 +94,3 @@ const styles = {
     padding: theme.spacing(0.5)
   })
 }
-
-// 🛠 Improvements Summary:
-// Area	Change	Why
-// 🧹 Styles	Moved all styles to styles object	Consistency & maintainability
-// ✅ Naming	send → handleSend, onKeyDown → handleKeyDown	Improved semantic clarity
-// 🐞 Order of operations	Moved setText('') after sendMessage call	Prevents accidentally sending empty messages
-// 📦 Token logic	Simplified useEffect to clearly assign user	Better readability
-// 🔒 Form behavior	disabled button based on safe checks	Prevents user errors
-// 🧪 Keyboard UX	Enter key sends message, Shift+Enter allows line break (if needed)	Common UX pattern
