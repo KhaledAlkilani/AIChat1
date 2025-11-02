@@ -10,14 +10,14 @@ export default function RegisterPage() {
   const [busy, setBusy] = useState(false)
   const nav = useNavigate()
 
-  const handleUsername = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setUserData({
       ...userData,
       username: e.target.value
     })
   }
 
-  const handlePassword = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setUserData({
       ...userData,
       password: e.target.value || ''
@@ -50,14 +50,14 @@ export default function RegisterPage() {
         <TextField
           label="Username"
           value={userData?.username}
-          onChange={handleUsername}
+          onChange={handleUsernameChange}
           autoFocus
         />
         <TextField
           label="Password"
           type="password"
           value={userData?.password}
-          onChange={handlePassword}
+          onChange={handlePasswordChange}
         />
         <Button
           type="submit"
