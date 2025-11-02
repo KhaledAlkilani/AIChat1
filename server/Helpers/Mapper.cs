@@ -1,5 +1,6 @@
 ﻿using AIChat1.DTOs;
 using AIChat1.Entity;
+using AIChat1.Entity.Enums;
 
 namespace AIChat1.Helpers
 {
@@ -19,7 +20,7 @@ namespace AIChat1.Helpers
                 m.Id,
                 m.ConversationId,
                 m.UserId,
-                m.User?.Username ?? string.Empty,
+                m.Sender == MessageSender.Assistant ? "AI" : (m.User?.Username ?? string.Empty),
                 m.Sender,
                 m.Content,
                 m.SentAt
@@ -38,7 +39,7 @@ namespace AIChat1.Helpers
             Url = f.Url
         };
 
-        // ===== Inbound (only if needed) =====
+        // -------- DTOs -> Entities (only if needed) --------
         public static Conversation ToEntity(this ConversationDto d) => new Conversation
         {
             Id = d.Id,
@@ -68,9 +69,28 @@ namespace AIChat1.Helpers
         // Registration request → User entity
         public static User ToNewUser(this RegisterRequest r, string hashedPassword) => new User
         {
-            Username = r.Username, 
+            Username = r.Username,
             HashedPassword = hashedPassword
         };
-    
-}
+
+        // -------- Message factories used by controller --------
+        public static Message NewUserMessage(int conversationId, int userId, string content) => new Message
+        {
+            ConversationId = conversationId,
+            UserId = userId,
+            Content = content,
+            SentAt = DateTime.UtcNow,
+            Sender = MessageSender.User
+        };
+
+        public static Message NewAssistantMessage(int conversationId, int userId, string content) => new Message
+        {
+            ConversationId = conversationId,
+            UserId = userId,
+            Content = content,
+            SentAt = DateTime.UtcNow,
+            Sender = MessageSender.Assistant
+        };
+
+    }
 }

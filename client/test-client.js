@@ -1,6 +1,6 @@
 const { HubConnectionBuilder, HttpTransportType, LogLevel } = require('@microsoft/signalr')
 
-;(async () => {
+await (async () => {
   // 1) Build the connection (match your server’s URL + port)
   const connection = new HubConnectionBuilder()
     .withUrl('http://localhost:5164/chat', {

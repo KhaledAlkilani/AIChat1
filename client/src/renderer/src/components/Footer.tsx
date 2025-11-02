@@ -24,6 +24,7 @@ const Footer = ({ sessionId, onMessageSent }: FooterProps) => {
   const handleSend = async () => {
     const content = text.trim()
     if (!content || !currentUser || !sessionId) {
+      return
     }
     setText('')
 

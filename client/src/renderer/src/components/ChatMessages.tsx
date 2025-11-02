@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material'
 import { useTheme, Theme } from '@mui/material/styles'
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { MessageDto } from '@renderer/api/api'
 import { OpenAPI } from '@renderer/api'
 import { useChatMessages } from '../hooks/useChatMessages'
@@ -65,7 +65,10 @@ const ChatMessages = ({ sessionId }: Props) => {
         await conn.start()
       } catch (err) {
         // retry a bit later if start races during reload
-        if (!cancelled) setTimeout(start, 1500)
+        if (!cancelled) {
+          setTimeout(start, 1500)
+        }
+        console.error(err)
       }
     }
     start()
@@ -83,14 +86,12 @@ const ChatMessages = ({ sessionId }: Props) => {
     }
   }, [base, sessionId, refetchMessages])
 
-  console.log(msgs.map((m) => m.content))
-
   return (
     <Box sx={styles.ChatMessages(theme)}>
       {loading && <Typography color="text.secondary">Loading messages...</Typography>}
       {error && <Typography color="error">Failed to load messages: {error.message}</Typography>}
-      {msgs.map((m, i) => (
-        <Box key={i} gap={1} sx={{ mb: 2, display: 'flex' }}>
+      {msgs.map((m) => (
+        <Box key={m.id} gap={1} sx={{ mb: 2, display: 'flex' }}>
           <strong>{(m as any).username ?? m.userId}:</strong> {m.content}
         </Box>
       ))}

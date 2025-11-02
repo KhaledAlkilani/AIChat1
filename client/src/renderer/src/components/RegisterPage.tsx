@@ -1,23 +1,36 @@
 import { useState } from 'react'
 import { useNavigate, Link as RouterLink } from 'react-router-dom'
 import { Box, Button, Link, Stack, TextField, Typography } from '@mui/material'
-import { api } from '@renderer/api/api'
+import { api, LoginRequest } from '@renderer/api/api'
 import { OpenAPI } from '@renderer/api'
 
 export default function RegisterPage() {
-  const [username, setU] = useState('')
-  const [password, setP] = useState('')
+  const [userData, setUserData] = useState<LoginRequest>({ username: '', password: '' })
   const [err, setErr] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
   const nav = useNavigate()
+
+  const handleUsername = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setUserData({
+      ...userData,
+      username: e.target.value
+    })
+  }
+
+  const handlePassword = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setUserData({
+      ...userData,
+      password: e.target.value || ''
+    })
+  }
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setErr(null)
     setBusy(true)
     try {
-      await api.AuthService.postApiAuthRegister({ username, password }) // 201 Created
-      const token = await api.AuthService.postApiAuthLogin({ username, password })
+      await api.AuthService.postApiAuthRegister(userData) // 201 Created
+      const token = await api.AuthService.postApiAuthLogin(userData)
       localStorage.setItem('token', token)
       OpenAPI.TOKEN = token
       nav('/chat', { replace: true })
@@ -36,20 +49,20 @@ export default function RegisterPage() {
       <Stack spacing={2}>
         <TextField
           label="Username"
-          value={username}
-          onChange={(e) => setU(e.target.value)}
+          value={userData?.username}
+          onChange={handleUsername}
           autoFocus
         />
         <TextField
           label="Password"
           type="password"
-          value={password}
-          onChange={(e) => setP(e.target.value)}
+          value={userData?.password}
+          onChange={handlePassword}
         />
         <Button
           type="submit"
           variant="contained"
-          disabled={busy || !username.trim() || !password.trim()}
+          disabled={busy || !userData?.username.trim() || !userData.password.trim()}
         >
           {busy ? '...' : 'Register'}
         </Button>
