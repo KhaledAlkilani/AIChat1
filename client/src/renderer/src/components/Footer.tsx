@@ -1,49 +1,73 @@
-import { Box, FormControl, IconButton, InputBase } from '@mui/material'
-import { useTheme, Theme } from '@mui/material/styles'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { AuthUser, getTokenString, getUserFromToken } from '@renderer/auth/jwt'
 import { api } from '@renderer/api/api'
+import { Box, FormControl, IconButton, InputBase, Theme, useTheme } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send'
-import { OpenAPI } from '@renderer/api'
 
-const Footer = () => {
+interface FooterProps {
+  sessionId: number | undefined
+  onMessageSent: (firstUserText?: string, sessionIdArg?: number) => void
+}
+
+const Footer = ({ sessionId, onMessageSent }: FooterProps) => {
   const theme = useTheme()
   const [text, setText] = useState('')
-  const currentUserId = 1 // TODO: get this from your auth/user store
+  const [currentUser, setCurrentUser] = useState<AuthUser | null>(null)
 
-  const send = async () => {
+  // Retrieve user info from token on mount
+  useEffect(() => {
+    const token = getTokenString()
+    const user = token ? getUserFromToken(token) : null
+    setCurrentUser(user)
+  }, [])
+
+  const handleSend = async () => {
     const content = text.trim()
-    if (!content) return
+    if (!content || !currentUser || !sessionId) {
+      return
+    }
+    setText('')
+
     try {
-      console.log('[send] POST', `${OpenAPI.BASE}/api/chat/send`, {
-        userId: currentUserId,
-        content
+      // bind the message to the active conversation
+      await api.ChatService.sendMessage({
+        userId: currentUser?.id,
+        content,
+        ...({ conversationId: sessionId } as any)
       })
-      await api.ChatService.sendMessage({ userId: currentUserId, content })
+
       setText('')
+      onMessageSent(content, sessionId)
     } catch (err) {
-      console.error('Failed to send:', err)
+      console.error('Failed to send message:', err)
     }
   }
 
-  const onKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (text === '') {
+      return
+    }
+
     if (e.key === 'Enter' && !e.shiftKey) {
+      setText('')
       e.preventDefault()
-      await send()
+      await handleSend()
     }
   }
+
+  const isDisabled = !text.trim() || !currentUser
 
   return (
-    <Box sx={styles.footer(theme)}>
-      <FormControl sx={{ width: '100%' }}>
+    <Box sx={styles.footerContainer(theme)}>
+      <FormControl sx={styles.formControl}>
         <InputBase
           value={text}
           onChange={(e) => setText(e.target.value)}
-          onKeyDown={onKeyDown}
-          sx={{ flex: 1, padding: theme.spacing(0.5) }}
-          fullWidth
+          onKeyDown={handleKeyDown}
           placeholder="Ask what’s on your mind"
+          sx={styles.inputBase(theme)}
           endAdornment={
-            <IconButton onClick={send} aria-label="send" disabled={!text.trim()}>
+            <IconButton onClick={handleSend} aria-label="send" disabled={isDisabled}>
               <SendIcon />
             </IconButton>
           }
@@ -56,13 +80,18 @@ const Footer = () => {
 export default Footer
 
 const styles = {
-  footer: (theme: Theme) => ({
+  footerContainer: (theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
-    gap: 1,
-    padding: `${theme.spacing(2)} ${theme.spacing(1)}`,
-    backgroundColor: theme.palette.grey[100],
-    borderTop: `1px solid ${theme.palette.divider}`,
-    color: theme.palette.text.secondary
+    padding: theme.spacing(1),
+    backgroundColor: theme.palette.background.paper,
+    borderTop: `1px solid ${theme.palette.divider}`
+  }),
+  formControl: {
+    width: '100%'
+  },
+  inputBase: (theme: Theme) => ({
+    flex: 1,
+    padding: theme.spacing(0.5)
   })
 }

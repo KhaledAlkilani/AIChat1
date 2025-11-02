@@ -5,5 +5,6 @@
 export type SendMessageRequest = {
     userId?: number;
     content?: string | null;
+    conversationId?: number | null;
 };
 

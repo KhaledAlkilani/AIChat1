@@ -25,10 +25,4 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.13.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Enums\" />
-    <Folder Include="IRepository\" />
-    <Folder Include="Repository\" />
-  </ItemGroup>
-
 </Project>

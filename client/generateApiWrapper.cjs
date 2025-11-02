@@ -1,6 +1,5 @@
-// generateApiWrapper.cjs
-const fs = require('fs')
-const path = require('path')
+const fs = require('node:fs')
+const path = require('node:path')
 
 const apiRoot = path.join(__dirname, 'src/renderer/src/api')
 const servicesDir = path.join(apiRoot, 'services')
@@ -41,4 +40,3 @@ const modelExports = fs.existsSync(modelsDir)
 
 const fileContent = `${imports}\n\n${apiObject}\n\n${modelExports}\n`
 fs.writeFileSync(outputFile, fileContent)
-console.log('API wrapper generated successfully!')

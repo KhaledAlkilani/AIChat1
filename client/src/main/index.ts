@@ -1,7 +1,8 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
-import { join } from 'path'
+import { app, shell, BrowserWindow, ipcMain, session } from 'electron'
+import { join } from 'node:path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer'
 
 function createWindow(): void {
   // Create the browser window.
@@ -51,6 +52,27 @@ app.whenReady().then(() => {
 
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
+
+  if (is.dev) {
+    installExtension(REACT_DEVELOPER_TOOLS, {
+      loadExtensionOptions: { allowFileAccess: true }
+    })
+      .then(async (info: any) => {
+        // Some Electron builds still need an explicit load; use the new API.
+        try {
+          const ext = session.defaultSession.extensions.getExtension(info.id)
+          if (!ext) {
+            await session.defaultSession.extensions.loadExtension(info.path)
+          }
+        } catch {
+          /* ignore if already loaded */
+        }
+
+        const all = session.defaultSession.extensions.getAllExtensions()
+        console.log('DevTools extensions:', all.map((e) => `${e.name}@${e.version}`).join(', '))
+      })
+      .catch((err) => console.error('React DevTools install failed:', err))
+  }
 
   createWindow()
 
