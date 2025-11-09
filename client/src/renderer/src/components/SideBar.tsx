@@ -9,6 +9,7 @@ import {
 } from '@mui/material'
 import { useTheme, Theme } from '@mui/material/styles'
 import DeleteIcon from '@mui/icons-material/Delete'
+import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline'
 import { useNavigate } from 'react-router-dom'
 import { logout } from '@renderer/auth/jwt'
 import { api, ConversationDto } from '@renderer/api/api'
@@ -28,8 +29,12 @@ const SideBar = ({ active, onSelect, onCreate, sessions, userId, setSessions }: 
   // const { sessions, userId, setSessions } = useChatSessions(true)
 
   const handleDelete = async (id: number) => {
-    if (!confirm('Delete this conversation?')) return
-    if (userId == null) return
+    if (!confirm('Delete this conversation?')) {
+      return
+    }
+    if (userId == null) {
+      return
+    }
 
     try {
       await api.ChatService.deleteConversation(id)
@@ -42,6 +47,24 @@ const SideBar = ({ active, onSelect, onCreate, sessions, userId, setSessions }: 
     } catch (err) {
       console.error('Failed to delete conversation:', err)
     }
+  }
+
+  const handleRenameConvTitle = (id: number) => {
+    const current = sessions.find((session) => session.id === id)?.title ?? ''
+    const input = prompt('Rename conversation title:', current)
+    if (input === null) {
+      return
+    }
+    const title = input.trim()
+    if (!title) {
+      return
+    }
+
+    setSessions((prev) => prev.map((s) => (s.id === id ? { ...s, title } : s)))
+
+    // try {
+    //   await api.ChatService.renam
+    // } catch (err) {}
   }
 
   const handleLogout = () => {
@@ -69,6 +92,17 @@ const SideBar = ({ active, onSelect, onCreate, sessions, userId, setSessions }: 
                   primary={s.title ?? 'New chat'}
                   secondary={s.createdAt ? new Date(s.createdAt).toLocaleString() : ''}
                 />
+                <IconButton
+                  size="small"
+                  edge="end"
+                  aria-label="delete"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleRenameConvTitle(s.id!)
+                  }}
+                >
+                  <ModeEditOutlineIcon fontSize="small" />
+                </IconButton>
                 <IconButton
                   size="small"
                   edge="end"

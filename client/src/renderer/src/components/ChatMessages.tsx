@@ -89,7 +89,7 @@ const ChatMessages = ({ sessionId }: Props) => {
   return (
     <Box sx={styles.ChatMessages(theme)}>
       {loading && <Typography color="text.secondary">Loading messages...</Typography>}
-      {error && <Typography color="error">Failed to load messages: {error.message}</Typography>}
+      {/* {error && <Typography color="error">Failed to load messages: {error.message}</Typography>} */}
       {msgs.map((m) => (
         <Box key={m.id} gap={1} sx={{ mb: 2, display: 'flex' }}>
           <strong>{(m as any).username ?? m.userId}:</strong> {m.content}

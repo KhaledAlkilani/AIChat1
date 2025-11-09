@@ -55,7 +55,7 @@ const Footer = ({ sessionId, onMessageSent }: FooterProps) => {
     }
   }
 
-  const isDisabled = !text.trim() || !currentUser
+  const isDisabled = !currentUser
 
   return (
     <Box sx={styles.footerContainer(theme)}>
