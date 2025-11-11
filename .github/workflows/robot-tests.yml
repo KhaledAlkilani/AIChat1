@@ -35,7 +35,7 @@ jobs:
       - name: Run Robot tests
         working-directory: tests/robot
         run: |
-          robot -d output tests/login-smoke.robot
+          robot -d output tests/login-test.robot
 
       - name: Upload Robot reports
         uses: actions/upload-artifact@v4
