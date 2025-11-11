@@ -2,10 +2,10 @@ name: Robot Tests
 
 on:
   push:
-    branches: [main]
+    branches: [adding-robot-testing-automation]
   pull_request:
-    branches: [main]
-    workflow_dispatch: {}
+    branches: [adding-robot-testing-automation]
+  workflow_dispatch: {}
 
 jobs:
   run-robot-tests:
