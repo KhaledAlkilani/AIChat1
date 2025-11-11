@@ -25,6 +25,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r tests/robot/requirements.txt
 
+          - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+          install-dependencies: true
+          install-chromedriver: true
+
       - name: Start web app
         working-directory: client
         run: |
