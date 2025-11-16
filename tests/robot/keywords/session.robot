@@ -4,7 +4,7 @@ Resource   ../resources/variables.robot
 
 *** Keywords ***
 Open Application
-    Open Browser            ${BASE_URL}    headlessfirefox
+    Open Browser            ${BASE_URL}    ${BROWSER}
     Set Selenium Timeout    ${SELENIUM_TIMEOUT}
     # Maximize Browser Window
 
