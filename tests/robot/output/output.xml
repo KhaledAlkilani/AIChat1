@@ -1,69 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.3.2 (Python 3.13.9 on win32)" generated="2025-11-11T22:28:52.496464" rpa="false" schemaversion="5">
+<robot generator="Robot 7.3.2 (Python 3.13.9 on win32)" generated="2025-11-16T17:08:47.551882" rpa="false" schemaversion="5">
 <suite id="s1" name="Login-Test" source="C:\Users\mc120\AIChat1\tests\robot\tests\login-test.robot">
 <test id="s1-t1" name="User Can Login" line="9">
 <kw name="Open Application" owner="session">
 <kw name="Open Browser" owner="SeleniumLibrary">
-<msg time="2025-11-11T22:28:52.693602" level="INFO">Opening browser 'chrome' to base url 'http://localhost:5173/'.</msg>
+<msg time="2025-11-16T17:08:50.374899" level="INFO">Opening browser 'chrome' to base url 'http://localhost:5173/'.</msg>
 <arg>${BASE_URL}</arg>
 <arg>${BROWSER}</arg>
 <doc>Opens a new browser instance to the optional ``url``.</doc>
-<status status="PASS" start="2025-11-11T22:28:52.693353" elapsed="1.535393"/>
+<status status="PASS" start="2025-11-16T17:08:50.374606" elapsed="4.012011"/>
 </kw>
 <kw name="Set Selenium Timeout" owner="SeleniumLibrary">
 <arg>${SELENIUM_TIMEOUT}</arg>
 <doc>Sets the timeout that is used by various keywords.</doc>
-<status status="PASS" start="2025-11-11T22:28:54.228964" elapsed="0.001228"/>
+<status status="PASS" start="2025-11-16T17:08:54.386870" elapsed="0.001089"/>
 </kw>
 <kw name="Maximize Browser Window" owner="SeleniumLibrary">
 <doc>Maximizes current browser window.</doc>
-<status status="PASS" start="2025-11-11T22:28:54.230344" elapsed="0.031369"/>
+<status status="PASS" start="2025-11-16T17:08:54.388116" elapsed="0.035787"/>
 </kw>
-<status status="PASS" start="2025-11-11T22:28:52.692324" elapsed="1.569522"/>
+<status status="PASS" start="2025-11-16T17:08:50.373611" elapsed="4.050432"/>
 </kw>
 <kw name="Login As" owner="login">
 <kw name="Fill Credentials" owner="login">
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-11-11T22:28:54.263925" level="INFO">Typing text 'testuser01' into text field 'id=username_field'.</msg>
+<msg time="2025-11-16T17:08:54.426079" level="INFO">Typing text 'testuser01' into text field 'id=username_field'.</msg>
 <arg>${LOC_USERNAME}</arg>
 <arg>${username}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-11-11T22:28:54.263382" elapsed="0.190185"/>
+<status status="PASS" start="2025-11-16T17:08:54.425412" elapsed="0.194327"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-11-11T22:28:54.454030" level="INFO">Typing text 'testuser1234' into text field 'id=password_field'.</msg>
+<msg time="2025-11-16T17:08:54.620184" level="INFO">Typing text 'testuser1234' into text field 'id=password_field'.</msg>
 <arg>${LOC_PASSWORD}</arg>
 <arg>${password}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-11-11T22:28:54.453770" elapsed="0.157911"/>
+<status status="PASS" start="2025-11-16T17:08:54.619929" elapsed="0.149249"/>
 </kw>
 <arg>${username}</arg>
 <arg>${password}</arg>
-<status status="PASS" start="2025-11-11T22:28:54.262945" elapsed="0.348863"/>
+<status status="PASS" start="2025-11-16T17:08:54.424887" elapsed="0.344423"/>
 </kw>
 <kw name="Submit Login" owner="login">
 <kw name="Click Button" owner="SeleniumLibrary">
-<msg time="2025-11-11T22:28:54.612428" level="INFO">Clicking button 'id=submit_button'.</msg>
+<msg time="2025-11-16T17:08:54.770031" level="INFO">Clicking button 'id=submit_button'.</msg>
 <arg>${LOC_SUBMIT}</arg>
 <doc>Clicks the button identified by ``locator``.</doc>
-<status status="PASS" start="2025-11-11T22:28:54.612243" elapsed="0.094564"/>
+<status status="PASS" start="2025-11-16T17:08:54.769741" elapsed="0.116738"/>
 </kw>
-<status status="PASS" start="2025-11-11T22:28:54.611982" elapsed="0.094965"/>
+<status status="PASS" start="2025-11-16T17:08:54.769488" elapsed="0.117113"/>
 </kw>
 <arg>${USERNAME}</arg>
 <arg>${PASSWORD}</arg>
-<status status="PASS" start="2025-11-11T22:28:54.262363" elapsed="0.444635"/>
+<status status="PASS" start="2025-11-16T17:08:54.424492" elapsed="0.462160"/>
 </kw>
 <kw name="Close Application" owner="session" type="TEARDOWN">
 <kw name="Close All Browsers" owner="SeleniumLibrary">
 <doc>Closes all open browsers and resets the browser cache.</doc>
-<status status="PASS" start="2025-11-11T22:28:54.707800" elapsed="2.183088"/>
+<status status="PASS" start="2025-11-16T17:08:54.887618" elapsed="2.432526"/>
 </kw>
-<status status="PASS" start="2025-11-11T22:28:54.707509" elapsed="2.183608"/>
+<status status="PASS" start="2025-11-16T17:08:54.887337" elapsed="2.433087"/>
 </kw>
-<status status="PASS" start="2025-11-11T22:28:52.691359" elapsed="4.200364"/>
+<status status="PASS" start="2025-11-16T17:08:50.372692" elapsed="6.948466"/>
 </test>
-<status status="PASS" start="2025-11-11T22:28:52.497690" elapsed="4.395409"/>
+<status status="PASS" start="2025-11-16T17:08:47.553954" elapsed="9.776750"/>
 </suite>
 <statistics>
 <total>
