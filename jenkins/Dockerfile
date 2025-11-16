@@ -45,7 +45,7 @@ USER root
 
 # Basic utilities + Docker CLI + Python 3
 RUN apt-get update && \
-    apt-get install -y lsb-release curl python3 python3-venv python3-pip && \
+    apt-get install -y lsb-release curl python3 python3-venv python3-pip nodejs npm && \
     curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
       https://download.docker.com/linux/debian/gpg && \
     echo "deb [arch=$(dpkg --print-architecture) \
