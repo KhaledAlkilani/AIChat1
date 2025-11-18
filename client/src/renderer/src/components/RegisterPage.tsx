@@ -48,25 +48,32 @@ export default function RegisterPage() {
       </Typography>
       <Stack spacing={2}>
         <TextField
+          id="register_username_field"
           label="Username"
           value={userData?.username}
           onChange={handleUsernameChange}
           autoFocus
         />
         <TextField
+          id="register_password_field"
           label="Password"
           type="password"
           value={userData?.password}
           onChange={handlePasswordChange}
         />
         <Button
+          id="register_submit_button"
           type="submit"
           variant="contained"
           disabled={busy || !userData?.username.trim() || !userData.password.trim()}
         >
           {busy ? '...' : 'Register'}
         </Button>
-        {!!err && <Typography color="error">{err}</Typography>}
+        {!!err && (
+          <Typography id="register_error_message" color="error">
+            {err}
+          </Typography>
+        )}
         <Typography variant="body2" sx={{ mt: 1 }}>
           Already have an account?{' '}
           <Link component={RouterLink} to="/login">

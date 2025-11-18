@@ -84,14 +84,19 @@ const ChatMessages = ({ sessionId }: Props) => {
       conn.off('ReceiveMessage', handler)
       void conn.stop()
     }
-  }, [base, sessionId, refetchMessages])
+  }, [base, sessionId])
 
   return (
     <Box sx={styles.ChatMessages(theme)}>
       {loading && <Typography color="text.secondary">Loading messages...</Typography>}
       {error && <Typography color="error">Failed to load messages: {error.message}</Typography>}
       {msgs.map((m) => (
-        <Box key={m.id} gap={1} sx={{ mb: 2, display: 'flex' }}>
+        <Box
+          id={m.userId === 0 ? 'ai-message' : 'user-message'}
+          key={m.id}
+          gap={1}
+          sx={{ mb: 2, display: 'flex' }}
+        >
           <strong>{(m as any).username ?? m.userId}:</strong> {m.content}
         </Box>
       ))}

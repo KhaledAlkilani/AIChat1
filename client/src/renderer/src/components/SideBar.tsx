@@ -66,10 +66,12 @@ const SideBar = ({ active, onSelect, onCreate, sessions, userId, setSessions }: 
             return (
               <ListItemButton key={s.id} selected={s.id === active} onClick={() => onSelect(s.id!)}>
                 <ListItemText
+                  id="active_chat_title"
                   primary={s.title ?? 'New chat'}
                   secondary={s.createdAt ? new Date(s.createdAt).toLocaleString() : ''}
                 />
                 <IconButton
+                  id="delete_chat_button"
                   size="small"
                   edge="end"
                   aria-label="delete"
@@ -88,6 +90,7 @@ const SideBar = ({ active, onSelect, onCreate, sessions, userId, setSessions }: 
 
       <Box sx={styles.stickyButtons}>
         <Button
+          id="new_chat_button"
           variant="contained"
           size="small"
           fullWidth
@@ -97,6 +100,7 @@ const SideBar = ({ active, onSelect, onCreate, sessions, userId, setSessions }: 
           New Chat
         </Button>
         <Button
+          id="logout_button"
           variant="text"
           size="small"
           fullWidth

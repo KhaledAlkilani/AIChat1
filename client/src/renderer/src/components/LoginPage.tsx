@@ -79,7 +79,7 @@ const LoginPage = () => {
 
         <Typography variant="body2" sx={styles.registerText}>
           Don’t have an account?{' '}
-          <Link component={RouterLink} to="/register">
+          <Link id="register-click" component={RouterLink} to="/register">
             Register
           </Link>
         </Typography>
@@ -89,12 +89,3 @@ const LoginPage = () => {
 }
 
 export default LoginPage
-
-// 🛠 Improvements Made
-// Area	Change	Reason
-// 🧹 Inline Styles	Moved into styles object	Separation of concerns; easier maintenance
-// 🔄 State Naming	setU → setUsername, setP → setPassword, etc.	Improves readability
-// 🚫 Useless short vars	Avoided cryptic var names like setU, nav	Makes code easier to understand
-// 🧪 Error Handling	Unified error type check (err?.message)	Cleaner error reporting
-// ❌ Conditional rendering	!!err && ... → just error && ...	More idiomatic React style
-// 🔐 Form validation	Disable button if username/password is empty or submitting	Prevent bad submissions

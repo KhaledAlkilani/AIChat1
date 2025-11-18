@@ -55,19 +55,25 @@ const Footer = ({ sessionId, onMessageSent }: FooterProps) => {
     }
   }
 
-  const isDisabled = !text.trim() || !currentUser
+  const isDisabled = !text.trim() || !currentUser || !sessionId
 
   return (
     <Box sx={styles.footerContainer(theme)}>
       <FormControl sx={styles.formControl}>
         <InputBase
+          id="message_input"
           value={text}
           onChange={(e) => setText(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Ask what’s on your mind"
           sx={styles.inputBase(theme)}
           endAdornment={
-            <IconButton onClick={handleSend} aria-label="send" disabled={isDisabled}>
+            <IconButton
+              id="send_message_button"
+              onClick={handleSend}
+              aria-label="send"
+              disabled={isDisabled}
+            >
               <SendIcon />
             </IconButton>
           }

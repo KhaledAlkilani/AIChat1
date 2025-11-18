@@ -6,7 +6,7 @@ Resource   ../resources/variables.robot
 Open Application
     Open Browser            ${BASE_URL}    ${BROWSER}
     Set Selenium Timeout    ${SELENIUM_TIMEOUT}
-    # Maximize Browser Window
+    Maximize Browser Window
 
 Close Application
     Close All Browsers
