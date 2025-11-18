@@ -13,7 +13,7 @@
     "typecheck": "npm run typecheck:node && npm run typecheck:web",
     "start": "electron-vite preview",
     "dev": "electron-vite dev",
-    "dev:renderer": "vite",
+    "dev:renderer": "vite --host 0.0.0.0 --port 5173",
     "build": "npm run generate-api && npm run typecheck && electron-vite build",
     "generate-api": "npx openapi-typescript-codegen --input http://localhost:5164/swagger/v1/swagger.json --output src/renderer/src/api --client fetch && node generateApiWrapper.cjs",
     "postinstall": "electron-builder install-app-deps",
