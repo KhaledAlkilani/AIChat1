@@ -1,6 +1,6 @@
 *** Variables ***
 ${BASE_URL}             http://localhost:5173/
-${BROWSER}              chrome
+${BROWSER}              headlessfirefox
 ${SELENIUM_TIMEOUT}     30s
 
 # Existing login user
