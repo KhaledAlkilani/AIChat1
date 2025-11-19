@@ -42,8 +42,9 @@ jobs:
           npm run dev:renderer -- --host 0.0.0.0 --port 5173 &
           echo "Waiting for frontend to be ready..."
           for i in {1..60}; do
-            if curl -fsS http://localhost:5173/ > /dev/null; then
-              echo "Frontend is up"
+            # no -f flag, so 404 is still exit code 0
+            if curl -sS http://localhost:5173/ > /dev/null; then
+              echo "Frontend is responding"
               break
             fi
             echo "Still waiting..."
