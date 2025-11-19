@@ -67,12 +67,12 @@ const LoginPage = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <Button
+          id="submit_button"
           type="submit"
           variant="contained"
           disabled={isLoading || !username.trim() || !password.trim()}
-          id="submit_button"
         >
-          {isLoading ? '...' : 'Login'}
+          {isLoading ? 'Loggin in ...' : 'Login'}
         </Button>
 
         {error && <Typography sx={styles.errorText}>{error}</Typography>}
