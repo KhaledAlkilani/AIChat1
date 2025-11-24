@@ -76,20 +76,6 @@ jobs:
           libasound2t64 \
           libx11-xcb1
           Xvfb :99 -screen 0 1920x1080x24 &
-
-      # 6) Launch Electron App (adjust this command to your actual startup)
-      - name: Start Frontend Only (Vite Dev Server)
-        run: |
-          npm run dev:renderer &
-          echo "Waiting for frontend to be ready..."
-          for i in {1..30}; do
-            if curl -s http://localhost:5173/ > /dev/null; then
-              echo "Frontend is responding."
-              break
-            fi
-            echo "Waiting..."
-            sleep 2
-          done
       - name: Debug running processes
         run: |
           ps aux | grep electron || true
