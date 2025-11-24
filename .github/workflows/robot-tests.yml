@@ -50,19 +50,27 @@ jobs:
         working-directory: client
         run: npm ci
 
-      - name: Start frontend
+      - name: Start Vite Dev Server (frontend)
         working-directory: client
         run: |
-          npm run dev:renderer -- --host 0.0.0.0 --port 5173 &
-          echo "Waiting for frontend to be ready..."
+          nohup npm run dev:renderer -- --host 0.0.0.0 --port 5173 > vite.log 2>&1 &
+          echo "Waiting for frontend to be ready on http://localhost:5173..."
           for i in {1..60}; do
-            if curl -sS http://localhost:5173/ > /dev/null; then
-              echo "Frontend is responding"
+            if curl -s http://localhost:5173/ > /dev/null; then
+              echo "Frontend is responding."
               break
             fi
             echo "Still waiting..."
             sleep 2
           done
+          echo "Done waiting."
+
+      - name: Upload vite.log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vite-log
+          path: client/vite.log
 
       # 5) Install and start Xvfb for GUI apps
       - name: Start virtual display (Xvfb)

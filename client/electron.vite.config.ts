@@ -20,6 +20,11 @@ export default defineConfig({
         '@mui/styled-engine': '@mui/styled-engine-sc'
       }
     },
-    plugins: [react()]
+    plugins: [react()],
+    server: {
+      host: '0.0.0.0',
+      port: 5173,
+      strictPort: true
+    }
   }
 })
