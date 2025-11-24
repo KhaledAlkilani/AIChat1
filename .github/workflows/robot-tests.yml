@@ -78,11 +78,18 @@ jobs:
           Xvfb :99 -screen 0 1920x1080x24 &
 
       # 6) Launch Electron App (adjust this command to your actual startup)
-      - name: Start Electron App
+      - name: Start Frontend Only (Vite Dev Server)
         run: |
-          npm run dev &
-          echo "Waiting for Electron to launch..."
-          sleep 10
+          npm run dev:renderer &
+          echo "Waiting for frontend to be ready..."
+          for i in {1..30}; do
+            if curl -s http://localhost:5173/ > /dev/null; then
+              echo "Frontend is responding."
+              break
+            fi
+            echo "Waiting..."
+            sleep 2
+          done
       - name: Debug running processes
         run: |
           ps aux | grep electron || true
