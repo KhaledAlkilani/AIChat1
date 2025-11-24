@@ -12,6 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import { useNavigate } from 'react-router-dom'
 import { logout } from '@renderer/auth/jwt'
 import { api, ConversationDto } from '@renderer/api/api'
+import { DateTime } from 'luxon'
 
 interface SideBarProps {
   active: number | null
@@ -68,7 +69,11 @@ const SideBar = ({ active, onSelect, onCreate, sessions, userId, setSessions }: 
                 <ListItemText
                   id="active_chat_title"
                   primary={s.title ?? 'New chat'}
-                  secondary={s.createdAt ? new Date(s.createdAt).toLocaleString() : ''}
+                  secondary={
+                    s.createdAt
+                      ? DateTime.fromISO(s.createdAt).toLocal().toFormat('yyyy-MM-dd HH:mm')
+                      : ''
+                  }
                 />
                 <IconButton
                   id="delete_chat_button"

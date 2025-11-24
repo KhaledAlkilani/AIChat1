@@ -13,12 +13,15 @@ jobs:
   Run-Test:
     runs-on: ubuntu-latest
 
+    env:
+      DISPLAY: :99
+
     steps:
       # 1) Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2) Cache pip like in the article
+      # 2) Cache pip dependencies
       - name: Cache pip dependencies
         uses: actions/cache@v4
         with:
@@ -37,7 +40,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r tests/robot/requirements.txt
 
-      # 4) Set up Node and frontend (your project specific part)
+      # 4) Set up Node and frontend
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
@@ -61,7 +64,24 @@ jobs:
             sleep 2
           done
 
-      # 5) Set up Chrome for Selenium / Robot
+      # 5) Install and start Xvfb for GUI apps
+      - name: Start virtual display (Xvfb)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb libgtk-3-0 libnss3 libxss1 libasound2 libx11-xcb1
+          Xvfb :99 -screen 0 1920x1080x24 &
+
+      # 6) Launch Electron App (adjust this command to your actual startup)
+      - name: Start Electron App
+        run: |
+          npm run dev &
+          echo "Waiting for Electron to launch..."
+          sleep 10
+      - name: Debug running processes
+        run: |
+          ps aux | grep electron || true
+
+      # 7) Set up Chrome for Selenium / Robot
       - name: Setup Chrome
         uses: browser-actions/setup-chrome@v1
         with:
@@ -69,13 +89,13 @@ jobs:
           install-dependencies: true
           install-chromedriver: true
 
-      # 6) Run Robot tests using "python -m robot" like the template
+      # 8) Run Robot tests
       - name: Run Robot Framework tests
         working-directory: tests/robot
         run: |
           python -m robot -d output --variable BROWSER:headlesschrome tests
 
-      # 7) Publish test results (Robot output dir)
+      # 9) Publish test results
       - name: Publish test results
         if: always()
         uses: actions/upload-artifact@v4
