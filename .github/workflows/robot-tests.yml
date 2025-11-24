@@ -88,6 +88,17 @@ jobs:
           install-dependencies: true
           install-chromedriver: true
 
+      - name: Capture frontend HTML for debugging
+        run: |
+          curl -s http://localhost:5173/login > /tmp/rendered.html || echo "Curl failed"
+          head -n 30 /tmp/rendered.html
+
+      - name: Upload loaded page HTML
+        uses: actions/upload-artifact@v4
+        with:
+          name: loaded-login-page
+          path: /tmp/rendered.html
+
       # 8) Run Robot tests
       - name: Run Robot Framework tests
         working-directory: tests/robot

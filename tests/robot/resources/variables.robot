@@ -1,5 +1,5 @@
 *** Variables ***
-${BASE_URL}             http://localhost:5173/login
+${BASE_URL}             http://localhost:5173/
 ${BROWSER}              chrome
 ${SELENIUM_TIMEOUT}     30s
 
