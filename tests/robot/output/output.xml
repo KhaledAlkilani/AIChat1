@@ -1,93 +1,903 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.3.2 (Python 3.13.9 on win32)" generated="2025-11-19T22:06:20.343382" rpa="false" schemaversion="5">
-<suite id="s1" name="Login-Test" source="C:\Users\mc120\AIChat1\tests\robot\tests\login-test.robot">
-<test id="s1-t1" name="User Can Login" line="10">
+<robot generator="Robot 7.3.2 (Python 3.13.9 on win32)" generated="2025-11-25T13:34:39.538394" rpa="false" schemaversion="5">
+<suite id="s1" name="Tests" source="C:\Users\mc120\AIChat1\tests\robot\tests">
+<suite id="s1-s1" name="Browse-History" source="C:\Users\mc120\AIChat1\tests\robot\tests\browse-history.robot">
+<test id="s1-s1-t1" name="Browse History" line="14">
 <kw name="Open Application" owner="session">
 <kw name="Open Browser" owner="SeleniumLibrary">
-<msg time="2025-11-19T22:06:20.617835" level="INFO">Opening browser 'chrome' to base url 'http://localhost:5173/'.</msg>
+<msg time="2025-11-25T13:34:39.768960" level="INFO">Opening browser 'chrome' to base url 'http://localhost:5173/'.</msg>
 <arg>${BASE_URL}</arg>
 <arg>${BROWSER}</arg>
 <doc>Opens a new browser instance to the optional ``url``.</doc>
-<status status="PASS" start="2025-11-19T22:06:20.617403" elapsed="1.549897"/>
+<status status="PASS" start="2025-11-25T13:34:39.768692" elapsed="2.619368"/>
+</kw>
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:42.388629" level="INFO">Opening url 'http://localhost:5173/login'</msg>
+<arg>${BASE_URL}login</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T13:34:42.388354" elapsed="0.185637"/>
 </kw>
 <kw name="Set Selenium Timeout" owner="SeleniumLibrary">
 <arg>${SELENIUM_TIMEOUT}</arg>
 <doc>Sets the timeout that is used by various keywords.</doc>
-<status status="PASS" start="2025-11-19T22:06:22.167567" elapsed="0.001136"/>
+<status status="PASS" start="2025-11-25T13:34:42.574257" elapsed="0.001702"/>
 </kw>
 <kw name="Maximize Browser Window" owner="SeleniumLibrary">
 <doc>Maximizes current browser window.</doc>
-<status status="PASS" start="2025-11-19T22:06:22.168926" elapsed="0.040650"/>
+<status status="PASS" start="2025-11-25T13:34:42.576209" elapsed="0.033520"/>
 </kw>
-<status status="PASS" start="2025-11-19T22:06:20.616721" elapsed="1.593015"/>
+<status status="PASS" start="2025-11-25T13:34:39.767998" elapsed="2.841895"/>
 </kw>
 <kw name="Login As" owner="login">
 <kw name="Fill Credentials" owner="login">
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-11-19T22:06:22.211849" level="INFO">Typing text 'testuser01' into text field 'id=username_field'.</msg>
+<msg time="2025-11-25T13:34:42.611957" level="INFO">Typing text 'testuser01' into text field 'id=username_field'.</msg>
 <arg>${LOC_USERNAME}</arg>
 <arg>${username}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-11-19T22:06:22.211481" elapsed="0.220964"/>
+<status status="PASS" start="2025-11-25T13:34:42.611487" elapsed="0.169713"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-11-19T22:06:22.433010" level="INFO">Typing text 'testuser1234' into text field 'id=password_field'.</msg>
+<msg time="2025-11-25T13:34:42.781669" level="INFO">Typing text 'testuser1234' into text field 'id=password_field'.</msg>
 <arg>${LOC_PASSWORD}</arg>
 <arg>${password}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-11-19T22:06:22.432706" elapsed="0.164131"/>
+<status status="PASS" start="2025-11-25T13:34:42.781405" elapsed="0.143390"/>
 </kw>
 <arg>${username}</arg>
 <arg>${password}</arg>
-<status status="PASS" start="2025-11-19T22:06:22.211130" elapsed="0.385840"/>
+<status status="PASS" start="2025-11-25T13:34:42.611040" elapsed="0.313884"/>
 </kw>
 <kw name="Submit Login" owner="login">
 <kw name="Click Button" owner="SeleniumLibrary">
-<msg time="2025-11-19T22:06:22.597618" level="INFO">Clicking button 'id=submit_button'.</msg>
+<msg time="2025-11-25T13:34:42.925513" level="INFO">Clicking button 'id=submit_button'.</msg>
 <arg>${LOC_SUBMIT}</arg>
 <doc>Clicks the button identified by ``locator``.</doc>
-<status status="PASS" start="2025-11-19T22:06:22.597419" elapsed="0.112799"/>
+<status status="PASS" start="2025-11-25T13:34:42.925332" elapsed="0.119076"/>
 </kw>
-<status status="PASS" start="2025-11-19T22:06:22.597146" elapsed="0.113233"/>
+<status status="PASS" start="2025-11-25T13:34:42.925088" elapsed="0.119476"/>
 </kw>
 <arg>${USERNAME}</arg>
 <arg>${PASSWORD}</arg>
-<status status="PASS" start="2025-11-19T22:06:22.210320" elapsed="0.500123"/>
+<status status="PASS" start="2025-11-25T13:34:42.610440" elapsed="0.434181"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:43.045303" level="INFO">Clicking button 'id=browse_history_button'.</msg>
+<msg time="2025-11-25T13:34:43.245702" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-71.png"&gt;&lt;img src="selenium-screenshot-71.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2025-11-25T13:34:43.245879" level="FAIL">Button with locator 'id=browse_history_button' not found.</msg>
+<arg>${LOC_HISTORY_BUTTON}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="FAIL" start="2025-11-25T13:34:43.045027" elapsed="0.204075">Button with locator 'id=browse_history_button' not found.</status>
+</kw>
+<kw name="Element Should Be Visible" owner="SeleniumLibrary">
+<arg>${LOC_HISTORY_LIST}</arg>
+<doc>Verifies that the element identified by ``locator`` is visible.</doc>
+<status status="NOT RUN" start="2025-11-25T13:34:43.249531" elapsed="0.000052"/>
+</kw>
+<kw name="Get Element Count" owner="SeleniumLibrary">
+<var>${count}</var>
+<arg>xpath=//ul[@id='history_list']/li</arg>
+<doc>Returns the number of elements matching ``locator``.</doc>
+<status status="NOT RUN" start="2025-11-25T13:34:43.250485" elapsed="0.000066"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${count} &gt; 0</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="NOT RUN" start="2025-11-25T13:34:43.250928" elapsed="0.000057"/>
+</kw>
+<kw name="Close Application" owner="session" type="TEARDOWN">
+<kw name="Close All Browsers" owner="SeleniumLibrary">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="PASS" start="2025-11-25T13:34:43.251790" elapsed="2.333700"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:34:43.251438" elapsed="2.334223"/>
+</kw>
+<status status="FAIL" start="2025-11-25T13:34:39.767142" elapsed="5.819018">Button with locator 'id=browse_history_button' not found.</status>
+</test>
+<doc>Browsing existing chat history</doc>
+<status status="FAIL" start="2025-11-25T13:34:39.569629" elapsed="6.018027"/>
+</suite>
+<suite id="s1-s2" name="Delete-Chat" source="C:\Users\mc120\AIChat1\tests\robot\tests\delete-chat.robot">
+<test id="s1-s2-t1" name="Delete Chat" line="14">
+<kw name="Open Application" owner="session">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:45.607811" level="INFO">Opening browser 'chrome' to base url 'http://localhost:5173/'.</msg>
+<arg>${BASE_URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-11-25T13:34:45.607382" elapsed="1.883363"/>
+</kw>
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:47.491147" level="INFO">Opening url 'http://localhost:5173/login'</msg>
+<arg>${BASE_URL}login</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T13:34:47.490941" elapsed="0.163030"/>
+</kw>
+<kw name="Set Selenium Timeout" owner="SeleniumLibrary">
+<arg>${SELENIUM_TIMEOUT}</arg>
+<doc>Sets the timeout that is used by various keywords.</doc>
+<status status="PASS" start="2025-11-25T13:34:47.654215" elapsed="0.001444"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-11-25T13:34:47.656053" elapsed="0.030902"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:34:45.606802" elapsed="2.080423"/>
+</kw>
+<kw name="Login As" owner="login">
+<kw name="Fill Credentials" owner="login">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:47.692516" level="INFO">Typing text 'testuser01' into text field 'id=username_field'.</msg>
+<arg>${LOC_USERNAME}</arg>
+<arg>${username}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:34:47.691978" elapsed="0.171656"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:47.864298" level="INFO">Typing text 'testuser1234' into text field 'id=password_field'.</msg>
+<arg>${LOC_PASSWORD}</arg>
+<arg>${password}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:34:47.863975" elapsed="0.135395"/>
+</kw>
+<arg>${username}</arg>
+<arg>${password}</arg>
+<status status="PASS" start="2025-11-25T13:34:47.690582" elapsed="0.308910"/>
+</kw>
+<kw name="Submit Login" owner="login">
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:48.000149" level="INFO">Clicking button 'id=submit_button'.</msg>
+<arg>${LOC_SUBMIT}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:34:47.999934" elapsed="0.097707"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:34:47.999659" elapsed="0.098114"/>
+</kw>
+<arg>${USERNAME}</arg>
+<arg>${PASSWORD}</arg>
+<status status="PASS" start="2025-11-25T13:34:47.688339" elapsed="0.409734"/>
+</kw>
+<kw name="Create New Chat" owner="chat">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${LOC_NEW_CHAT}</arg>
+<arg>10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2025-11-25T13:34:48.098789" elapsed="0.262048"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:48.361305" level="INFO">Clicking button 'id=new_chat_button'.</msg>
+<arg>${LOC_NEW_CHAT}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:34:48.361050" elapsed="0.081486"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:34:48.098459" elapsed="0.344186"/>
+</kw>
+<kw name="Send Message" owner="chat">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${LOC_MESSAGE_INPUT}</arg>
+<arg>5s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2025-11-25T13:34:48.443307" elapsed="0.055667"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:48.499759" level="INFO">Typing text 'Hello from Robot' into text field 'id=message_input'.</msg>
+<arg>${LOC_MESSAGE_INPUT}</arg>
+<arg>${text}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:34:48.499278" elapsed="0.109241"/>
+</kw>
+<kw name="Wait Until Element Is Enabled" owner="SeleniumLibrary">
+<arg>${LOC_SEND_MESSAGE}</arg>
+<arg>15s</arg>
+<doc>Waits until the element ``locator`` is enabled.</doc>
+<status status="PASS" start="2025-11-25T13:34:48.608702" elapsed="0.019115"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:48.628212" level="INFO">Clicking button 'id=send_message_button'.</msg>
+<arg>${LOC_SEND_MESSAGE}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:34:48.627994" elapsed="0.071796"/>
+</kw>
+<arg>${MESSAGE_TEXT}</arg>
+<status status="PASS" start="2025-11-25T13:34:48.443004" elapsed="0.257045"/>
+</kw>
+<kw name="Delete Active Chat" owner="chat">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${LOC_DELETE_BUTTON}</arg>
+<arg>10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2025-11-25T13:34:48.701205" elapsed="0.019598"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:48.721344" level="INFO">Clicking button 'id=delete_chat_button'.</msg>
+<arg>${LOC_DELETE_BUTTON}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:34:48.721053" elapsed="0.141155"/>
+</kw>
+<kw name="Handle Alert" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:48.862554" level="INFO">HANDLE::&lt;class 'NoneType'&gt;::None</msg>
+<arg>action=ACCEPT</arg>
+<doc>Handles the current alert and returns its message.</doc>
+<status status="PASS" start="2025-11-25T13:34:48.862389" elapsed="0.004719"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:34:48.700642" elapsed="0.166762"/>
 </kw>
 <kw name="Click Logout" owner="chat">
 <kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
 <arg>${LOC_LOGOUT_BUTTON}</arg>
 <arg>10s</arg>
 <doc>Waits until the element ``locator`` is visible.</doc>
-<status status="PASS" start="2025-11-19T22:06:22.711177" elapsed="0.265480"/>
+<status status="PASS" start="2025-11-25T13:34:48.869168" elapsed="0.079106"/>
 </kw>
 <kw name="Click Element" owner="SeleniumLibrary">
-<msg time="2025-11-19T22:06:22.977500" level="INFO">Clicking element 'id=logout_button'.</msg>
+<msg time="2025-11-25T13:34:48.948682" level="INFO">Clicking element 'id=logout_button'.</msg>
 <arg>${LOC_LOGOUT_BUTTON}</arg>
 <doc>Click the element identified by ``locator``.</doc>
-<status status="PASS" start="2025-11-19T22:06:22.977020" elapsed="0.119305"/>
+<status status="PASS" start="2025-11-25T13:34:48.948456" elapsed="0.065985"/>
 </kw>
-<status status="PASS" start="2025-11-19T22:06:22.710880" elapsed="0.385663"/>
+<status status="PASS" start="2025-11-25T13:34:48.868413" elapsed="0.146236"/>
 </kw>
 <kw name="Close Application" owner="session" type="TEARDOWN">
 <kw name="Close All Browsers" owner="SeleniumLibrary">
 <doc>Closes all open browsers and resets the browser cache.</doc>
-<status status="PASS" start="2025-11-19T22:06:23.098113" elapsed="2.231906"/>
+<status status="PASS" start="2025-11-25T13:34:49.015646" elapsed="2.185231"/>
 </kw>
-<status status="PASS" start="2025-11-19T22:06:23.097535" elapsed="2.232732"/>
+<status status="PASS" start="2025-11-25T13:34:49.015266" elapsed="2.185790"/>
 </kw>
-<status status="PASS" start="2025-11-19T22:06:20.615890" elapsed="4.715024"/>
+<status status="PASS" start="2025-11-25T13:34:45.605595" elapsed="5.595932"/>
 </test>
-<status status="PASS" start="2025-11-19T22:06:20.344967" elapsed="4.988501"/>
+<doc>Deleting a chat</doc>
+<status status="PASS" start="2025-11-25T13:34:45.589175" elapsed="5.613180"/>
+</suite>
+<suite id="s1-s3" name="Empty-Message-Not-Allowed" source="C:\Users\mc120\AIChat1\tests\robot\tests\empty-message-not-allowed.robot">
+<test id="s1-s3-t1" name="Empty Message Not Allowed" line="15">
+<kw name="Open Application" owner="session">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:51.222271" level="INFO">Opening browser 'chrome' to base url 'http://localhost:5173/'.</msg>
+<arg>${BASE_URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-11-25T13:34:51.221817" elapsed="1.905293"/>
+</kw>
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:53.127940" level="INFO">Opening url 'http://localhost:5173/login'</msg>
+<arg>${BASE_URL}login</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T13:34:53.127481" elapsed="0.189901"/>
+</kw>
+<kw name="Set Selenium Timeout" owner="SeleniumLibrary">
+<arg>${SELENIUM_TIMEOUT}</arg>
+<doc>Sets the timeout that is used by various keywords.</doc>
+<status status="PASS" start="2025-11-25T13:34:53.317959" elapsed="0.001738"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-11-25T13:34:53.320013" elapsed="0.045982"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:34:51.221358" elapsed="2.144796"/>
+</kw>
+<kw name="Login As" owner="login">
+<kw name="Fill Credentials" owner="login">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:53.367931" level="INFO">Typing text 'testuser01' into text field 'id=username_field'.</msg>
+<arg>${LOC_USERNAME}</arg>
+<arg>${username}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:34:53.367616" elapsed="0.205610"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:53.573691" level="INFO">Typing text 'testuser1234' into text field 'id=password_field'.</msg>
+<arg>${LOC_PASSWORD}</arg>
+<arg>${password}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:34:53.573429" elapsed="0.144084"/>
+</kw>
+<arg>${username}</arg>
+<arg>${password}</arg>
+<status status="PASS" start="2025-11-25T13:34:53.367187" elapsed="0.350528"/>
+</kw>
+<kw name="Submit Login" owner="login">
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:53.718459" level="INFO">Clicking button 'id=submit_button'.</msg>
+<arg>${LOC_SUBMIT}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:34:53.718258" elapsed="0.149092"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:34:53.717963" elapsed="0.149648"/>
+</kw>
+<arg>${USERNAME}</arg>
+<arg>${PASSWORD}</arg>
+<status status="PASS" start="2025-11-25T13:34:53.366603" elapsed="0.501139"/>
+</kw>
+<kw name="Create New Chat" owner="chat">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${LOC_NEW_CHAT}</arg>
+<arg>10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2025-11-25T13:34:53.869115" elapsed="0.281476"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:54.151461" level="INFO">Clicking button 'id=new_chat_button'.</msg>
+<arg>${LOC_NEW_CHAT}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:34:54.151027" elapsed="0.090342"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:34:53.868521" elapsed="0.373324"/>
+</kw>
+<kw name="Send Empty Message" owner="chat">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${LOC_MESSAGE_INPUT}</arg>
+<arg>5s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2025-11-25T13:34:54.243232" elapsed="0.065895"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:54.309569" level="INFO">Typing text '' into text field 'id=message_input'.</msg>
+<arg>${LOC_MESSAGE_INPUT}</arg>
+<arg>${text}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:34:54.309317" elapsed="0.073656"/>
+</kw>
+<kw name="Element Should Be Visible" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:54.398515" level="INFO">Element 'id=send_message_button' is displayed.</msg>
+<arg>${LOC_SEND_MESSAGE}</arg>
+<doc>Verifies that the element identified by ``locator`` is visible.</doc>
+<status status="PASS" start="2025-11-25T13:34:54.383304" elapsed="0.015380"/>
+</kw>
+<arg>${text}</arg>
+<status status="PASS" start="2025-11-25T13:34:54.242528" elapsed="0.156323"/>
+</kw>
+<kw name="Close Application" owner="session" type="TEARDOWN">
+<kw name="Close All Browsers" owner="SeleniumLibrary">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="PASS" start="2025-11-25T13:34:54.400139" elapsed="2.198789"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:34:54.399550" elapsed="2.199516"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:34:51.220390" elapsed="5.378983"/>
+</test>
+<doc>Validation when sending an empty message</doc>
+<status status="PASS" start="2025-11-25T13:34:51.203666" elapsed="5.396419"/>
+</suite>
+<suite id="s1-s4" name="Login-Test" source="C:\Users\mc120\AIChat1\tests\robot\tests\login-test.robot">
+<test id="s1-s4-t1" name="User Can Login" line="10">
+<kw name="Open Application" owner="session">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:56.608693" level="INFO">Opening browser 'chrome' to base url 'http://localhost:5173/'.</msg>
+<arg>${BASE_URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-11-25T13:34:56.608484" elapsed="2.196248"/>
+</kw>
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:58.805103" level="INFO">Opening url 'http://localhost:5173/login'</msg>
+<arg>${BASE_URL}login</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T13:34:58.804924" elapsed="0.162004"/>
+</kw>
+<kw name="Set Selenium Timeout" owner="SeleniumLibrary">
+<arg>${SELENIUM_TIMEOUT}</arg>
+<doc>Sets the timeout that is used by various keywords.</doc>
+<status status="PASS" start="2025-11-25T13:34:58.967125" elapsed="0.001444"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-11-25T13:34:58.968739" elapsed="0.036618"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:34:56.608193" elapsed="2.397279"/>
+</kw>
+<kw name="Login As" owner="login">
+<kw name="Fill Credentials" owner="login">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:59.006850" level="INFO">Typing text 'testuser01' into text field 'id=username_field'.</msg>
+<arg>${LOC_USERNAME}</arg>
+<arg>${username}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:34:59.006634" elapsed="0.154783"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:59.161882" level="INFO">Typing text 'testuser1234' into text field 'id=password_field'.</msg>
+<arg>${LOC_PASSWORD}</arg>
+<arg>${password}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:34:59.161633" elapsed="0.141881"/>
+</kw>
+<arg>${username}</arg>
+<arg>${password}</arg>
+<status status="PASS" start="2025-11-25T13:34:59.006283" elapsed="0.297451"/>
+</kw>
+<kw name="Submit Login" owner="login">
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:59.304334" level="INFO">Clicking button 'id=submit_button'.</msg>
+<arg>${LOC_SUBMIT}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:34:59.304154" elapsed="0.111683"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:34:59.303897" elapsed="0.112304"/>
+</kw>
+<arg>${USERNAME}</arg>
+<arg>${PASSWORD}</arg>
+<status status="PASS" start="2025-11-25T13:34:59.005843" elapsed="0.410445"/>
+</kw>
+<kw name="Click Logout" owner="chat">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${LOC_LOGOUT_BUTTON}</arg>
+<arg>10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2025-11-25T13:34:59.417211" elapsed="0.271515"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:34:59.689414" level="INFO">Clicking element 'id=logout_button'.</msg>
+<arg>${LOC_LOGOUT_BUTTON}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:34:59.689037" elapsed="0.097443"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:34:59.416825" elapsed="0.369805"/>
+</kw>
+<kw name="Close Application" owner="session" type="TEARDOWN">
+<kw name="Close All Browsers" owner="SeleniumLibrary">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="PASS" start="2025-11-25T13:34:59.787854" elapsed="2.263322"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:34:59.787257" elapsed="2.264178"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:34:56.607606" elapsed="5.444361"/>
+</test>
+<status status="PASS" start="2025-11-25T13:34:56.601329" elapsed="5.452203"/>
+</suite>
+<suite id="s1-s5" name="Logout" source="C:\Users\mc120\AIChat1\tests\robot\tests\logout.robot">
+<test id="s1-s5-t1" name="Logout" line="11">
+<kw name="Open Application" owner="session">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:02.070707" level="INFO">Opening browser 'chrome' to base url 'http://localhost:5173/'.</msg>
+<arg>${BASE_URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-11-25T13:35:02.070294" elapsed="2.245901"/>
+</kw>
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:04.316585" level="INFO">Opening url 'http://localhost:5173/login'</msg>
+<arg>${BASE_URL}login</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T13:35:04.316398" elapsed="0.195133"/>
+</kw>
+<kw name="Set Selenium Timeout" owner="SeleniumLibrary">
+<arg>${SELENIUM_TIMEOUT}</arg>
+<doc>Sets the timeout that is used by various keywords.</doc>
+<status status="PASS" start="2025-11-25T13:35:04.511730" elapsed="0.001142"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-11-25T13:35:04.513035" elapsed="0.038887"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:35:02.069668" elapsed="2.482400"/>
+</kw>
+<kw name="Login As" owner="login">
+<kw name="Fill Credentials" owner="login">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:04.557860" level="INFO">Typing text 'testuser01' into text field 'id=username_field'.</msg>
+<arg>${LOC_USERNAME}</arg>
+<arg>${username}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:35:04.557544" elapsed="0.183292"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:04.741411" level="INFO">Typing text 'testuser1234' into text field 'id=password_field'.</msg>
+<arg>${LOC_PASSWORD}</arg>
+<arg>${password}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:35:04.741138" elapsed="0.147004"/>
+</kw>
+<arg>${username}</arg>
+<arg>${password}</arg>
+<status status="PASS" start="2025-11-25T13:35:04.553092" elapsed="0.335282"/>
+</kw>
+<kw name="Submit Login" owner="login">
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:04.888989" level="INFO">Clicking button 'id=submit_button'.</msg>
+<arg>${LOC_SUBMIT}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:35:04.888805" elapsed="0.114706"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:35:04.888555" elapsed="0.115112"/>
+</kw>
+<arg>${USERNAME}</arg>
+<arg>${PASSWORD}</arg>
+<status status="PASS" start="2025-11-25T13:35:04.552516" elapsed="0.451217"/>
+</kw>
+<kw name="Click Logout" owner="chat">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${LOC_LOGOUT_BUTTON}</arg>
+<arg>10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2025-11-25T13:35:05.004793" elapsed="0.266673"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:05.272237" level="INFO">Clicking element 'id=logout_button'.</msg>
+<arg>${LOC_LOGOUT_BUTTON}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:35:05.271807" elapsed="0.069450"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:35:05.004219" elapsed="0.337169"/>
+</kw>
+<kw name="Close Application" owner="session" type="TEARDOWN">
+<kw name="Close All Browsers" owner="SeleniumLibrary">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="PASS" start="2025-11-25T13:35:05.342124" elapsed="2.267601"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:35:05.341843" elapsed="2.268071"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:35:02.068354" elapsed="5.542050"/>
+</test>
+<doc>Logging out from the application</doc>
+<status status="PASS" start="2025-11-25T13:35:02.055201" elapsed="5.556487"/>
+</suite>
+<suite id="s1-s6" name="Rename-Conversation" source="C:\Users\mc120\AIChat1\tests\robot\tests\rename-conversation.robot">
+<test id="s1-s6-t1" name="Rename Conversation" line="18">
+<kw name="Open Application" owner="session">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:07.626978" level="INFO">Opening browser 'chrome' to base url 'http://localhost:5173/'.</msg>
+<arg>${BASE_URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-11-25T13:35:07.626597" elapsed="2.176354"/>
+</kw>
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:09.803338" level="INFO">Opening url 'http://localhost:5173/login'</msg>
+<arg>${BASE_URL}login</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T13:35:09.803164" elapsed="0.179272"/>
+</kw>
+<kw name="Set Selenium Timeout" owner="SeleniumLibrary">
+<arg>${SELENIUM_TIMEOUT}</arg>
+<doc>Sets the timeout that is used by various keywords.</doc>
+<status status="PASS" start="2025-11-25T13:35:09.982627" elapsed="0.001428"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-11-25T13:35:09.984294" elapsed="0.037052"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:35:07.626059" elapsed="2.395424"/>
+</kw>
+<kw name="Login As" owner="login">
+<kw name="Fill Credentials" owner="login">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:10.022811" level="INFO">Typing text 'testuser01' into text field 'id=username_field'.</msg>
+<arg>${LOC_USERNAME}</arg>
+<arg>${username}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:35:10.022612" elapsed="0.180528"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:10.203710" level="INFO">Typing text 'testuser1234' into text field 'id=password_field'.</msg>
+<arg>${LOC_PASSWORD}</arg>
+<arg>${password}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:35:10.203420" elapsed="0.137618"/>
+</kw>
+<arg>${username}</arg>
+<arg>${password}</arg>
+<status status="PASS" start="2025-11-25T13:35:10.022349" elapsed="0.318822"/>
+</kw>
+<kw name="Submit Login" owner="login">
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:10.341793" level="INFO">Clicking button 'id=submit_button'.</msg>
+<arg>${LOC_SUBMIT}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:35:10.341615" elapsed="0.107531"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:35:10.341360" elapsed="0.108023"/>
+</kw>
+<arg>${USERNAME}</arg>
+<arg>${PASSWORD}</arg>
+<status status="PASS" start="2025-11-25T13:35:10.021920" elapsed="0.427555"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:10.450633" level="INFO">Clicking button 'id=new_chat_button'.</msg>
+<arg>${LOC_NEW_CHAT_BUTTON}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:35:10.450082" elapsed="0.217264"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:10.668026" level="INFO">Clicking button 'id=rename_chat_button'.</msg>
+<msg time="2025-11-25T13:35:10.938864" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-72.png"&gt;&lt;img src="selenium-screenshot-72.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2025-11-25T13:35:10.939017" level="FAIL">Button with locator 'id=rename_chat_button' not found.</msg>
+<arg>${LOC_RENAME_BUTTON}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="FAIL" start="2025-11-25T13:35:10.667779" elapsed="0.272339">Button with locator 'id=rename_chat_button' not found.</status>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<arg>${LOC_RENAME_INPUT}</arg>
+<arg>${NEW_CHAT_NAME}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="NOT RUN" start="2025-11-25T13:35:10.940583" elapsed="0.000046"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<arg>${LOC_RENAME_SAVE}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="NOT RUN" start="2025-11-25T13:35:10.940975" elapsed="0.000031"/>
+</kw>
+<kw name="Element Text Should Be" owner="SeleniumLibrary">
+<arg>${LOC_ACTIVE_CHAT_TITLE}</arg>
+<arg>${NEW_CHAT_NAME}</arg>
+<doc>Verifies that element ``locator`` contains exact the text ``expected``.</doc>
+<status status="NOT RUN" start="2025-11-25T13:35:10.941276" elapsed="0.000025"/>
+</kw>
+<kw name="Close Application" owner="session" type="TEARDOWN">
+<kw name="Close All Browsers" owner="SeleniumLibrary">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="PASS" start="2025-11-25T13:35:10.942012" elapsed="2.239907"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:35:10.941750" elapsed="2.240373"/>
+</kw>
+<status status="FAIL" start="2025-11-25T13:35:07.624885" elapsed="5.557678">Button with locator 'id=rename_chat_button' not found.</status>
+</test>
+<doc>Renaming an existing conversation</doc>
+<status status="FAIL" start="2025-11-25T13:35:07.613529" elapsed="5.570729"/>
+</suite>
+<suite id="s1-s7" name="Send-Message-And-Receive-Ai-Reply" source="C:\Users\mc120\AIChat1\tests\robot\tests\send-message-and-receive-ai-reply.robot">
+<test id="s1-s7-t1" name="New Chat" line="13">
+<kw name="Open Application" owner="session">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:13.199109" level="INFO">Opening browser 'chrome' to base url 'http://localhost:5173/'.</msg>
+<arg>${BASE_URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-11-25T13:35:13.198694" elapsed="2.230717"/>
+</kw>
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:15.429926" level="INFO">Opening url 'http://localhost:5173/login'</msg>
+<arg>${BASE_URL}login</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T13:35:15.429730" elapsed="0.172383"/>
+</kw>
+<kw name="Set Selenium Timeout" owner="SeleniumLibrary">
+<arg>${SELENIUM_TIMEOUT}</arg>
+<doc>Sets the timeout that is used by various keywords.</doc>
+<status status="PASS" start="2025-11-25T13:35:15.602379" elapsed="0.001275"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-11-25T13:35:15.603823" elapsed="0.049449"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:35:13.198060" elapsed="2.455330"/>
+</kw>
+<kw name="Login As" owner="login">
+<kw name="Fill Credentials" owner="login">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:15.654499" level="INFO">Typing text 'testuser01' into text field 'id=username_field'.</msg>
+<arg>${LOC_USERNAME}</arg>
+<arg>${username}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:35:15.654309" elapsed="0.191503"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:15.846458" level="INFO">Typing text 'testuser1234' into text field 'id=password_field'.</msg>
+<arg>${LOC_PASSWORD}</arg>
+<arg>${password}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:35:15.846142" elapsed="0.160508"/>
+</kw>
+<arg>${username}</arg>
+<arg>${password}</arg>
+<status status="PASS" start="2025-11-25T13:35:15.654076" elapsed="0.352707"/>
+</kw>
+<kw name="Submit Login" owner="login">
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:16.007410" level="INFO">Clicking button 'id=submit_button'.</msg>
+<arg>${LOC_SUBMIT}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:35:16.007218" elapsed="0.145390"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:35:16.006965" elapsed="0.145802"/>
+</kw>
+<arg>${USERNAME}</arg>
+<arg>${PASSWORD}</arg>
+<status status="PASS" start="2025-11-25T13:35:15.653737" elapsed="0.499089"/>
+</kw>
+<kw name="Create New Chat" owner="chat">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${LOC_NEW_CHAT}</arg>
+<arg>10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2025-11-25T13:35:16.153826" elapsed="0.135466"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:16.289764" level="INFO">Clicking button 'id=new_chat_button'.</msg>
+<arg>${LOC_NEW_CHAT}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:35:16.289507" elapsed="0.066265"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:35:16.153527" elapsed="0.202441"/>
+</kw>
+<kw name="Send Message" owner="chat">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${LOC_MESSAGE_INPUT}</arg>
+<arg>5s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2025-11-25T13:35:16.356842" elapsed="0.078691"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:16.436399" level="INFO">Typing text 'Hello from Robot' into text field 'id=message_input'.</msg>
+<arg>${LOC_MESSAGE_INPUT}</arg>
+<arg>${text}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:35:16.435913" elapsed="0.158730"/>
+</kw>
+<kw name="Wait Until Element Is Enabled" owner="SeleniumLibrary">
+<arg>${LOC_SEND_MESSAGE}</arg>
+<arg>15s</arg>
+<doc>Waits until the element ``locator`` is enabled.</doc>
+<status status="PASS" start="2025-11-25T13:35:16.594865" elapsed="0.019639"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:16.614997" level="INFO">Clicking button 'id=send_message_button'.</msg>
+<arg>${LOC_SEND_MESSAGE}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:35:16.614749" elapsed="0.096391"/>
+</kw>
+<arg>${MESSAGE_TEXT}</arg>
+<status status="PASS" start="2025-11-25T13:35:16.356520" elapsed="0.354735"/>
+</kw>
+<kw name="User message should be visible" owner="chat">
+<kw name="Wait Until Page Contains" owner="SeleniumLibrary">
+<arg>${expected}</arg>
+<arg>20s</arg>
+<doc>Waits until ``text`` appears on the current page.</doc>
+<status status="PASS" start="2025-11-25T13:35:16.712251" elapsed="0.028246"/>
+</kw>
+<arg>${MESSAGE_TEXT}</arg>
+<status status="PASS" start="2025-11-25T13:35:16.711727" elapsed="0.028896"/>
+</kw>
+<kw name="Close Application" owner="session" type="TEARDOWN">
+<kw name="Close All Browsers" owner="SeleniumLibrary">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="PASS" start="2025-11-25T13:35:16.741370" elapsed="2.284485"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:35:16.741062" elapsed="2.285029"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:35:13.196628" elapsed="5.829787"/>
+</test>
+<doc>Create a new chat and sending a message and receiving AI reply</doc>
+<status status="PASS" start="2025-11-25T13:35:13.186445" elapsed="5.840641"/>
+</suite>
+<suite id="s1-s8" name="Unauthorized-Access" source="C:\Users\mc120\AIChat1\tests\robot\tests\unauthorized-access.robot">
+<test id="s1-s8-t1" name="Unauthorized Access" line="13">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:19.038766" level="INFO">Opening browser 'chrome' to base url 'http://localhost:5173/chat'.</msg>
+<arg>${CHAT_URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-11-25T13:35:19.038558" elapsed="2.160108"/>
+</kw>
+<kw name="Set Selenium Timeout" owner="SeleniumLibrary">
+<arg>${SELENIUM_TIMEOUT}</arg>
+<doc>Sets the timeout that is used by various keywords.</doc>
+<status status="PASS" start="2025-11-25T13:35:21.199343" elapsed="0.001670"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-11-25T13:35:21.201846" elapsed="0.035742"/>
+</kw>
+<kw name="Element Should Be Visible" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:21.443133" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-73.png"&gt;&lt;img src="selenium-screenshot-73.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2025-11-25T13:35:21.443282" level="FAIL">Element with locator 'id=unauthorized_message' not found.</msg>
+<arg>${LOC_UNAUTH_MESSAGE}</arg>
+<doc>Verifies that the element identified by ``locator`` is visible.</doc>
+<status status="FAIL" start="2025-11-25T13:35:21.237952" elapsed="0.206435">Element with locator 'id=unauthorized_message' not found.</status>
+</kw>
+<kw name="Close Application" owner="session" type="TEARDOWN">
+<kw name="Close All Browsers" owner="SeleniumLibrary">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="PASS" start="2025-11-25T13:35:21.445312" elapsed="2.329575"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:35:21.445014" elapsed="2.330128"/>
+</kw>
+<status status="FAIL" start="2025-11-25T13:35:19.038072" elapsed="4.737519">Element with locator 'id=unauthorized_message' not found.</status>
+</test>
+<doc>Unauthorized user cannot access protected chat view</doc>
+<status status="FAIL" start="2025-11-25T13:35:19.028691" elapsed="4.747768"/>
+</suite>
+<suite id="s1-s9" name="User-Registration" source="C:\Users\mc120\AIChat1\tests\robot\tests\user-registration.robot">
+<test id="s1-s9-t1" name="Open Application" line="10">
+<kw name="Open Application" owner="session">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:23.786349" level="INFO">Opening browser 'chrome' to base url 'http://localhost:5173/'.</msg>
+<arg>${BASE_URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-11-25T13:35:23.786164" elapsed="2.119223"/>
+</kw>
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:25.905750" level="INFO">Opening url 'http://localhost:5173/login'</msg>
+<arg>${BASE_URL}login</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T13:35:25.905574" elapsed="0.190676"/>
+</kw>
+<kw name="Set Selenium Timeout" owner="SeleniumLibrary">
+<arg>${SELENIUM_TIMEOUT}</arg>
+<doc>Sets the timeout that is used by various keywords.</doc>
+<status status="PASS" start="2025-11-25T13:35:26.096516" elapsed="0.001354"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-11-25T13:35:26.098065" elapsed="0.041555"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:35:23.785849" elapsed="2.353894"/>
+</kw>
+<kw name="Navigate To Registration" owner="register">
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:26.140662" level="INFO">Clicking element 'id=register-click'.</msg>
+<arg>${LOC_GO_TO_REGISTER}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:35:26.140390" elapsed="0.117383"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:35:26.140113" elapsed="0.117777"/>
+</kw>
+<kw name="Register As" owner="register">
+<kw name="Fill Registration Form" owner="register">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:26.259163" level="INFO">Typing text 'lucifer69x' into text field 'id=register_username_field'.</msg>
+<arg>${LOC_REG_USERNAME}</arg>
+<arg>${username}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:35:26.258948" elapsed="0.160941"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:26.420352" level="INFO">Typing text 'lucifer691234x' into text field 'id=register_password_field'.</msg>
+<arg>${LOC_REG_PASSWORD}</arg>
+<arg>${password}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:35:26.420089" elapsed="0.178441"/>
+</kw>
+<arg>${username}</arg>
+<arg>${password}</arg>
+<status status="PASS" start="2025-11-25T13:35:26.258699" elapsed="0.339951"/>
+</kw>
+<kw name="Submit Registration" owner="register">
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T13:35:26.599283" level="INFO">Clicking button 'id=register_submit_button'.</msg>
+<arg>${LOC_REG_SUBMIT}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T13:35:26.599081" elapsed="0.138238"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:35:26.598833" elapsed="0.138669"/>
+</kw>
+<arg>${REG_USERNAME}</arg>
+<arg>${REG_PASSWORD}</arg>
+<status status="PASS" start="2025-11-25T13:35:26.258331" elapsed="0.479268"/>
+</kw>
+<kw name="Close Application" owner="session" type="TEARDOWN">
+<kw name="Close All Browsers" owner="SeleniumLibrary">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="PASS" start="2025-11-25T13:35:26.738434" elapsed="2.240081"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:35:26.738164" elapsed="2.240636"/>
+</kw>
+<status status="PASS" start="2025-11-25T13:35:23.785437" elapsed="5.194047"/>
+</test>
+<doc>New user registration</doc>
+<status status="PASS" start="2025-11-25T13:35:23.777213" elapsed="5.203646"/>
+</suite>
+<status status="FAIL" start="2025-11-25T13:34:39.540302" elapsed="49.442476"/>
 </suite>
 <statistics>
 <total>
-<stat pass="1" fail="0" skip="0">All Tests</stat>
+<stat pass="6" fail="3" skip="0">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat name="Login-Test" id="s1" pass="1" fail="0" skip="0">Login-Test</stat>
+<stat name="Tests" id="s1" pass="6" fail="3" skip="0">Tests</stat>
+<stat name="Browse-History" id="s1-s1" pass="0" fail="1" skip="0">Tests.Browse-History</stat>
+<stat name="Delete-Chat" id="s1-s2" pass="1" fail="0" skip="0">Tests.Delete-Chat</stat>
+<stat name="Empty-Message-Not-Allowed" id="s1-s3" pass="1" fail="0" skip="0">Tests.Empty-Message-Not-Allowed</stat>
+<stat name="Login-Test" id="s1-s4" pass="1" fail="0" skip="0">Tests.Login-Test</stat>
+<stat name="Logout" id="s1-s5" pass="1" fail="0" skip="0">Tests.Logout</stat>
+<stat name="Rename-Conversation" id="s1-s6" pass="0" fail="1" skip="0">Tests.Rename-Conversation</stat>
+<stat name="Send-Message-And-Receive-Ai-Reply" id="s1-s7" pass="1" fail="0" skip="0">Tests.Send-Message-And-Receive-Ai-Reply</stat>
+<stat name="Unauthorized-Access" id="s1-s8" pass="0" fail="1" skip="0">Tests.Unauthorized-Access</stat>
+<stat name="User-Registration" id="s1-s9" pass="1" fail="0" skip="0">Tests.User-Registration</stat>
 </suite>
 </statistics>
 <errors>
