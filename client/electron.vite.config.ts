@@ -24,7 +24,8 @@ export default defineConfig({
     server: {
       host: '0.0.0.0', // so Jenkins / other containers can reach it
       port: 5173,
-      strictPort: true
+      strictPort: true,
+      allowedHosts: ['host.docker.internal']
     }
   }
 })
