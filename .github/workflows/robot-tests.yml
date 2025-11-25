@@ -72,23 +72,23 @@ jobs:
           name: vite-log
           path: client/vite.log
 
-      # 5) Install and start Xvfb for GUI apps
+      # 5) Install and start Xvfb for GUI apps (optional but OK)
       - name: Start virtual display (Xvfb)
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-          xvfb \
-          libgtk-3-0 \
-          libnss3 \
-          libxss1 \
-          libasound2t64 \
-          libx11-xcb1
+            xvfb \
+            libgtk-3-0 \
+            libnss3 \
+            libxss1 \
+            libasound2t64 \
+            libx11-xcb1
           Xvfb :99 -screen 0 1920x1080x24 &
-      - name: Debug running processes
-        run: |
-          ps aux | grep electron || true
 
-      # 7) Set up Chrome for Selenium / Robot
+      - name: Debug running processes
+        run: ps aux | grep electron || true
+
+      # 6) Set up Chrome
       - name: Setup Chrome
         uses: browser-actions/setup-chrome@v1
         with:
@@ -107,13 +107,17 @@ jobs:
           name: loaded-login-page
           path: /tmp/rendered.html
 
-      # 8) Run Robot tests
+      # 7) Run Robot tests (single step)
       - name: Run Robot Framework tests
-        working-directory: tests/robot
+        env:
+          BASE_URL: http://127.0.0.1:5173/
         run: |
-          python -m robot -d output --variable BROWSER:headlesschrome tests
+          robot -d tests/robot/output \
+            --variable BROWSER:headlesschrome \
+            --variable BASE_URL:${BASE_URL} \
+            tests/robot/tests
 
-      # 9) Publish test results
+      # 8) Publish test results
       - name: Publish test results
         if: always()
         uses: actions/upload-artifact@v4
